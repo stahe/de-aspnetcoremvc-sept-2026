@@ -1,0 +1,1995 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-aspnetcoremvc-sept-2026/authentifizierung-und-autorisierung.html">
+      
+      
+        <link rel="prev" href="der-lebenszyklus-einer-anfrage.html">
+      
+      
+        <link rel="next" href="schichtenarchitektur-und-datenzugriff.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>8. Authentifizierung und Autorisierung - Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#8-authentifizierung-und-autorisierung" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Authentifizierung und Autorisierung
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einleitung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einleitung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#81-beispiel-25-anmeldung-token-geschutzte-seite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1. Beispiel 25: Anmeldung, Token, geschützte Seite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1. Beispiel 25: Anmeldung, Token, geschützte Seite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#811-ausfuhrung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.1. Ausführung
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-beispiel-26-rollen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2. Beispiel 26: Rollen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-beispiel-27-captcha-und-begrenzung-der-versuche" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3. Beispiel 27: CAPTCHA und Begrenzung der Versuche
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="8-authentifizierung-und-autorisierung">8. <span style="color: #2e74b5">Authentifizierung und Autorisierung</span></h1>
+<p>Bei jeder Anfrage stellen sich zwei getrennte Fragen:</p>
+<ul>
+<li>Wer ist der Benutzer? Das ist die <strong>Authentifizierung</strong>: Der Benutzer hat sich mit Benutzername und Passwort ausgewiesen, und jede folgende Anfrage muss nachweisen, dass sie von ihm stammt;</li>
+<li>Hat der Benutzer die Berechtigung, auf diese Seite zuzugreifen? Das ist die <strong>Autorisierung</strong>: In der Fallstudie verwaltet nur ein Benutzer mit der Rolle ADMIN die Ärzte und Kunden.</li>
+</ul>
+<p>Da der Server zustandslos ist (Kapitel 6), muss der Identitätsnachweis in jeder Anfrage enthalten sein. Verwendet wird ein <strong>JWT-Token</strong> (<em>[JSON Web Token]</em>): Nach der Anmeldung erzeugt der Server ein Token, das die Identität des Benutzers enthält, und <strong>signiert</strong> es mit einem geheimen Schlüssel. Das Token wird in einem Cookie gespeichert; der Browser sendet es mit jeder Anfrage zurück; der Server prüft die Signatur. Der Benutzer kann sein Token lesen, aber nicht ändern: Jede Änderung macht die Signatur ungültig.</p>
+<p><em>[ASP.NET Core]</em> unterscheidet die beiden Fragen klar:</p>
+<ul>
+<li>Die Authentifizierung wird von einer Middleware (<strong><em>[UseAuthentication]</em></strong>) und einem <strong>Authentifizierungsschema</strong> übernommen: hier das Schema <em>[JwtBearer]</em>, bereitgestellt vom <em>[NuGet]</em>-Paket <strong><em>[Microsoft.AspNetCore.Authentication.JwtBearer]</em></strong> . Bei jeder Anfrage sucht es nach einem Token, prüft es und leitet daraus den Benutzer ab, <strong><em>[HttpContext.User]</em></strong>;</li>
+<li>Die Autorisierung wird vom Attribut <strong><em>[[Authorize]]</em></strong> übernommen, das von der Middleware <strong><em>[UseAuthorization]</em></strong> geprüft wird: Sie vergleicht die Anforderungen der Action mit dem, was über den Benutzer bekannt ist.</li>
+</ul>
+<p>Die Beispiele dieses Kapitels verwenden zwei <em>[NuGet]</em>-Pakete: <strong><em>[Microsoft.AspNetCore.Authentication.JwtBearer]</em></strong> und <strong><em>[BCrypt.Net-Next]</em></strong> (Passwort-Hashing). Sie sind in der Projektdatei deklariert; der Befehl <strong><em>[dotnet build]</em></strong> (oder <strong><em>[dotnet run]</em></strong>) lädt sie bei der ersten Kompilierung von <a href="https://www.nuget.org/"><u><span style="color: #0563c1">nuget.org</span></u></a> herunter: Eine Internetverbindung ist daher erforderlich.</p>
+<h2 id="81-beispiel-25-anmeldung-token-geschutzte-seite">8.1. <span style="color: #2e74b5">Beispiel 25: Anmeldung, Token, geschützte Seite</span></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>25-jwt/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── Auth/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>│   ├── AuthService.cs
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│   └── UsersService.cs
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>├── Controllers/
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│   ├── AuthController.cs
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│   └── ProfileController.cs
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>├── Views/
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│   ├── Auth/
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>│   │   └── Login.cshtml
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>│   ├── Profile/
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>│   │   └── Profile.cshtml
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>│   ├── Shared/
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>│   │   └── _Layout.cshtml
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>│   ├── _ViewImports.cshtml
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│   └── _ViewStart.cshtml
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>├── appsettings.json
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>├── Example25.csproj
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>└── Program.cs
+</code></pre></div></td></tr></table></div>
+<p>Die Datei <strong><em>[Example25.csproj]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">&lt;Project</span><span class="w"> </span><span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk.Web"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">&lt;ItemGroup&gt;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="cm">&lt;!-- Authentifizierung per JWT-Token (Überprüfung des Tokens) --&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="nt">&lt;PackageReference</span><span class="w"> </span><span class="na">Include=</span><span class="s">"Microsoft.AspNetCore.Authentication.JwtBearer"</span><span class="w"> </span><span class="na">Version=</span><span class="s">"10.0.0"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="cm">&lt;!-- Passwort-Hashing (bcrypt) --&gt;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="nt">&lt;PackageReference</span><span class="w"> </span><span class="na">Include=</span><span class="s">"BCrypt.Net-Next"</span><span class="w"> </span><span class="na">Version=</span><span class="s">"4.0.3"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="nt">&lt;/ItemGroup&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="nt">&lt;/Project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 5–7: die verwendeten <em>[NuGet]</em>-Pakete und ihre Versionen. Die allen Beispielen gemeinsamen Elemente (Version von <em>[.NET]</em> ...) stehen in der Datei <strong><em>[Directory.Build.props]</em></strong> im Ordner <strong><em>[examples]</em></strong>.</li>
+</ul>
+<p>Die Datei <strong><em>[appsettings.json]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nt">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">      </span><span class="nt">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">      </span><span class="nt">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span><span class="nt">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span><span class="nt">"Jwt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">    </span><span class="nt">"Secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a-secret-key-of-at-least-32-characters-for-example-25"</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">    </span><span class="nt">"DurationMinutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 9–11: ein anwendungsspezifischer Konfigurationsabschnitt: der Schlüssel, mit dem Tokens signiert werden, und ihre Lebensdauer. Wer den Schlüssel kennt, kann gültige Tokens erzeugen: In der Produktion wird er nicht in einer Projektdatei gespeichert, sondern über eine Umgebungsvariable (<strong><em>[Jwt__Secret]</em></strong>) oder einen Secret-Tresor bereitgestellt. Der verwendete Algorithmus (HMAC-SHA256) erfordert einen Schlüssel von mindestens 32 Byte.</li>
+</ul>
+<p>Die Datei <strong><em>[Auth/UsersService.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example25.Auth</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">public</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="nf">User</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Login</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Role</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">PasswordHash</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="c1">// die Benutzer im Speicher (das nächste Kapitel legt sie in einer Datenbank ab)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UsersService</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="p">{</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">    </span><span class="na">[</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="na">        // ein Passwort wird NIE gespeichert, nur sein Hash</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="na">        Create("marie", "Marie Pélissier", "USER", "marie"),</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="na">        Create("admin", "Administrator", "ADMIN", "admin"),</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="na">    ]</span><span class="p">;</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">User</span><span class="o">?</span><span class="w"> </span><span class="n">Find</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">login</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">        </span><span class="n">users</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="n">u</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">Login</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">login</span><span class="p">);</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span><span class="c1">// bcrypt mit Kostenfaktor 10: 2^10 Berechnungsrunden, bewusst langsam</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="nf">Create</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="w">        </span><span class="k">new</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">BCrypt</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">BCrypt</span><span class="p">.</span><span class="n">HashPassword</span><span class="p">(</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">));</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 3: ein Benutzer mit seiner Rolle;</li>
+<li>Zeilen 10–12: Ein Passwort wird nie gespeichert; nur sein <strong>Hash</strong> wird behalten – ein Fingerabdruck, der von einer Einwegfunktion berechnet wird. Man kann prüfen, ob ein Passwort zu einem Fingerabdruck passt, aber das Passwort nicht aus dem Fingerabdruck wiederherstellen;</li>
+<li>Zeilen 19–20: <strong><em>[BCrypt.Net.BCrypt.HashPassword(password, 10)]</em></strong> berechnet den Hash mit dem Algorithmus <em>[bcrypt]</em>. Die 10 steht für die „Kosten“: <em>[bcrypt]</em> ist absichtlich langsam (2¹⁰ Berechnungsrunden), um davon abzuschrecken, Millionen von Passwörtern auszuprobieren. Zwei Hashes desselben Passworts sind verschieden (es wird ein zufälliges „Salt“ hinzugefügt): <strong><em>[BCrypt.Verify]</em></strong> übernimmt deren Überprüfung.</li>
+</ul>
+<p>Die Datei <strong><em>[Auth/AuthService.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span>
+<span class="normal"><a href="#__codelineno-4-24">24</a></span>
+<span class="normal"><a href="#__codelineno-4-25">25</a></span>
+<span class="normal"><a href="#__codelineno-4-26">26</a></span>
+<span class="normal"><a href="#__codelineno-4-27">27</a></span>
+<span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.IdentityModel.JsonWebTokens</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.IdentityModel.Tokens</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example25.Auth</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">AuthService</span><span class="p">(</span><span class="n">UsersService</span><span class="w"> </span><span class="n">users</span><span class="p">,</span><span class="w"> </span><span class="n">IConfiguration</span><span class="w"> </span><span class="n">configuration</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="p">{</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="w">    </span><span class="c1">// der Name des Cookies, das das Token trägt</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"token"</span><span class="p">;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">    </span><span class="c1">// der Schlüssel, der die Tokens signiert, aus appsettings.json gelesen (Abschnitt Jwt)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">SymmetricSecurityKey</span><span class="w"> </span><span class="nf">Key</span><span class="p">(</span><span class="n">IConfiguration</span><span class="w"> </span><span class="n">configuration</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">        </span><span class="k">new</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">configuration</span><span class="p">[</span><span class="s">"Jwt:Secret"</span><span class="p">]</span><span class="o">!</span><span class="p">));</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a><span class="w">    </span><span class="c1">// null, wenn der Login unbekannt oder das Passwort falsch ist</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">User</span><span class="o">?</span><span class="w"> </span><span class="n">Validate</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">password</span><span class="p">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">Find</span><span class="p">(</span><span class="n">login</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">BCrypt</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">BCrypt</span><span class="p">.</span><span class="n">Verify</span><span class="p">(</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">PasswordHash</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="w">    </span><span class="c1">// das JWT-Token des Benutzers, mit dem geheimen Schlüssel signiert</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">CreateToken</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">descriptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecurityTokenDescriptor</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="w">            </span><span class="c1">// der Inhalt des Tokens: die "Claims" (Aussagen über den Benutzer)</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="w">            </span><span class="n">Claims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">object</span><span class="o">&gt;</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a><span class="w">                </span><span class="na">["sub"]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">Login</span><span class="p">,</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a><span class="w">                </span><span class="na">["name"]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a><span class="w">                </span><span class="na">["role"]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user</span><span class="p">.</span><span class="n">Role</span><span class="p">,</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a><span class="w">            </span><span class="n">Expires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">.</span><span class="n">AddMinutes</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Jwt:DurationMinutes"</span><span class="p">)),</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a><span class="w">            </span><span class="n">SigningCredentials</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SigningCredentials</span><span class="p">(</span><span class="n">Key</span><span class="p">(</span><span class="n">configuration</span><span class="p">),</span><span class="w"> </span><span class="n">SecurityAlgorithms</span><span class="p">.</span><span class="n">HmacSha256</span><span class="p">),</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">JsonWebTokenHandler</span><span class="p">().</span><span class="n">CreateToken</span><span class="p">(</span><span class="n">descriptor</span><span class="p">);</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code durch:</p>
+<ul>
+<li>Zeile 10: der Name des Cookies, das das Token trägt;</li>
+<li>Zeilen 13–14: Der Signaturschlüssel, erzeugt aus dem Text von <strong><em>[appsettings.json]</em></strong>. <strong><em>[IConfiguration]</em></strong> bietet Zugriff auf die Konfiguration; <strong><em>[&quot;Jwt:Secret&quot;]</em></strong> bezeichnet die Eigenschaft <strong><em>[Secret]</em></strong> im Abschnitt <strong><em>[Jwt]</em></strong>. Derselbe Schlüssel dient zum Signieren und zum Prüfen der Tokens (<strong>symmetrischer</strong> Algorithmus);</li>
+<li>Zeilen 17–24: Überprüfung von Benutzername und Passwort;</li>
+<li>Zeilen 33–37: der Inhalt des Tokens, die <strong>Claims</strong> (Aussagen über den Benutzer). <strong><em>[sub]</em></strong> (<em>[subject]</em>) ist die übliche Bezeichnung für den Bezeichner des Benutzers. Wir nehmen auf, was die Seiten benötigen (Name, Rolle), damit wir nicht bei jeder Anfrage die Datenbank abfragen müssen;</li>
+<li>Zeile 39: das Ablaufdatum des Tokens;</li>
+<li>Zeile 40: der Signaturschlüssel und der Algorithmus;</li>
+<li>Zeile 42: Die Klasse <strong><em>[JsonWebTokenHandler]</em></strong> (Paket <strong><em>[Microsoft.IdentityModel.JsonWebTokens]</em></strong>, bereitgestellt von <em>[JwtBearer]</em>) erzeugt das signierte Token.</li>
+</ul>
+<p>Die Datei <strong><em>[Program.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span>
+<span class="normal"><a href="#__codelineno-5-26">26</a></span>
+<span class="normal"><a href="#__codelineno-5-27">27</a></span>
+<span class="normal"><a href="#__codelineno-5-28">28</a></span>
+<span class="normal"><a href="#__codelineno-5-29">29</a></span>
+<span class="normal"><a href="#__codelineno-5-30">30</a></span>
+<span class="normal"><a href="#__codelineno-5-31">31</a></span>
+<span class="normal"><a href="#__codelineno-5-32">32</a></span>
+<span class="normal"><a href="#__codelineno-5-33">33</a></span>
+<span class="normal"><a href="#__codelineno-5-34">34</a></span>
+<span class="normal"><a href="#__codelineno-5-35">35</a></span>
+<span class="normal"><a href="#__codelineno-5-36">36</a></span>
+<span class="normal"><a href="#__codelineno-5-37">37</a></span>
+<span class="normal"><a href="#__codelineno-5-38">38</a></span>
+<span class="normal"><a href="#__codelineno-5-39">39</a></span>
+<span class="normal"><a href="#__codelineno-5-40">40</a></span>
+<span class="normal"><a href="#__codelineno-5-41">41</a></span>
+<span class="normal"><a href="#__codelineno-5-42">42</a></span>
+<span class="normal"><a href="#__codelineno-5-43">43</a></span>
+<span class="normal"><a href="#__codelineno-5-44">44</a></span>
+<span class="normal"><a href="#__codelineno-5-45">45</a></span>
+<span class="normal"><a href="#__codelineno-5-46">46</a></span>
+<span class="normal"><a href="#__codelineno-5-47">47</a></span>
+<span class="normal"><a href="#__codelineno-5-48">48</a></span>
+<span class="normal"><a href="#__codelineno-5-49">49</a></span>
+<span class="normal"><a href="#__codelineno-5-50">50</a></span>
+<span class="normal"><a href="#__codelineno-5-51">51</a></span>
+<span class="normal"><a href="#__codelineno-5-52">52</a></span>
+<span class="normal"><a href="#__codelineno-5-53">53</a></span>
+<span class="normal"><a href="#__codelineno-5-54">54</a></span>
+<span class="normal"><a href="#__codelineno-5-55">55</a></span>
+<span class="normal"><a href="#__codelineno-5-56">56</a></span>
+<span class="normal"><a href="#__codelineno-5-57">57</a></span>
+<span class="normal"><a href="#__codelineno-5-58">58</a></span>
+<span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text.Encodings.Web</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text.Unicode</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example25.Auth</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Authentication.JwtBearer</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.Extensions.FileProviders</span><span class="p">;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.IdentityModel.Tokens</span><span class="p">;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="kt">var</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WebApplication</span><span class="p">.</span><span class="n">CreateBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddControllersWithViews</span><span class="p">();</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="p">(</span><span class="n">HtmlEncoder</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">UnicodeRanges</span><span class="p">.</span><span class="n">All</span><span class="p">));</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="o">&lt;</span><span class="n">UsersService</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddSingleton</span><span class="o">&lt;</span><span class="n">AuthService</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="c1">// Authentifizierung: ein JWT-Token, bei jeder Anfrage überprüft</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a><span class="w">    </span><span class="p">.</span><span class="n">AddAuthentication</span><span class="p">(</span><span class="n">JwtBearerDefaults</span><span class="p">.</span><span class="n">AuthenticationScheme</span><span class="p">)</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a><span class="w">    </span><span class="p">.</span><span class="n">AddJwtBearer</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a><span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">MapInboundClaims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// die Claim-Namen unverändert lassen ("sub", "role"...)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a><span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">TokenValidationParameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TokenValidationParameters</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a><span class="w">            </span><span class="n">ValidateIssuerSigningKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="w">            </span><span class="n">IssuerSigningKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AuthService</span><span class="p">.</span><span class="n">Key</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Configuration</span><span class="p">),</span><span class="w"> </span><span class="c1">// die Signatur muss von uns stammen</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="w">            </span><span class="n">ValidateLifetime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span><span class="w">                                   </span><span class="c1">// das Token darf nicht abgelaufen sein</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="w">            </span><span class="n">ValidateIssuer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26"></a><span class="w">            </span><span class="n">ValidateAudience</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27"></a><span class="w">            </span><span class="n">NameClaimType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="c1">// User.Identity.Name</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28"></a><span class="w">            </span><span class="n">RoleClaimType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"role"</span><span class="p">,</span><span class="w"> </span><span class="c1">// [Authorize(Roles = ...)], User.IsInRole(...)</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="w">        </span><span class="n">options</span><span class="p">.</span><span class="n">Events</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JwtBearerEvents</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="w">            </span><span class="c1">// 1. das Token wird aus dem Cookie gelesen (und nicht aus dem Header Authorization)</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33"></a><span class="w">            </span><span class="n">OnMessageReceived</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35"></a><span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">AuthService</span><span class="p">.</span><span class="n">Cookie</span><span class="p">];</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38"></a><span class="w">            </span><span class="c1">// 2. geschützte Seite ohne gültiges Token: weiter zur Login-Seite</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39"></a><span class="w">            </span><span class="n">OnChallenge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=&gt;</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41"></a><span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">HandleResponse</span><span class="p">();</span><span class="w"> </span><span class="c1">// wir erstellen die Antwort selbst (kein 401)</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42"></a><span class="w">                </span><span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">"/login"</span><span class="p">);</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43"></a><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47"></a><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddAuthorization</span><span class="p">();</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48"></a>
+<a id="__codelineno-5-49" name="__codelineno-5-49"></a><span class="kt">var</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50"></a>
+<a id="__codelineno-5-51" name="__codelineno-5-51"></a><span class="n">app</span><span class="p">.</span><span class="n">UseStaticFiles</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StaticFileOptions</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52"></a><span class="p">{</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53"></a><span class="w">    </span><span class="n">FileProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PhysicalFileProvider</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">GetFullPath</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="n">ContentRootPath</span><span class="p">,</span><span class="w"> </span><span class="s">".."</span><span class="p">,</span><span class="w"> </span><span class="s">"common"</span><span class="p">,</span><span class="w"> </span><span class="s">"bootstrap"</span><span class="p">))),</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54"></a><span class="w">    </span><span class="n">RequestPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"/bootstrap"</span><span class="p">,</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55"></a><span class="p">});</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56"></a><span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span><span class="w"> </span><span class="c1">// wer ist es? -&gt; HttpContext.User</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57"></a><span class="n">app</span><span class="p">.</span><span class="n">UseAuthorization</span><span class="p">();</span><span class="w">  </span><span class="c1">// ist es erlaubt? -&gt; [Authorize]</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58"></a>
+<a id="__codelineno-5-59" name="__codelineno-5-59"></a><span class="n">app</span><span class="p">.</span><span class="n">MapControllers</span><span class="p">();</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a><span class="n">app</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeilen 16–17: Wir deklarieren das Authentifizierungsschema <em>[JwtBearer]</em> und legen es als Standardschema fest;</li>
+<li>Zeile 19: Standardmäßig benennt <em>[JwtBearer]</em> bestimmte Claims mit langen, von Microsoft-Technologien geerbten Namen um (<strong><em>[role]</em></strong> würde zu <strong><em>[http://schemas.microsoft.com/ws/2008/06/identity/claims/role]</em></strong>). Wir behalten die Namen des Tokens bei;</li>
+<li>Zeilen 20–26: Die Prüfungen, die bei jedem Token durchgeführt werden: die Signatur (mit unserem Schlüssel) und das Ablaufdatum. Unsere Tokens geben weder den Aussteller (<em>[issuer]</em>) noch den Empfänger (<em>[audience]</em>) an, daher prüfen wir sie nicht;</li>
+<li>Zeilen 27–28: welcher Claim den Namen des Benutzers enthält (<strong><em>[User.Identity.Name]</em></strong>) und welcher seine Rolle (<strong><em>[[Authorize(Roles = ...)]]</em></strong>, <strong><em>[User.IsInRole(...)]</em></strong>);</li>
+<li>Zeilen 33–36: die <strong>Ereignisse</strong> von <em>[JwtBearer]</em> ermöglichen es, das Verhalten anzupassen. Standardmäßig sucht es das Token im <strong><em>[Authorization: Bearer ...]</em></strong>-Header der Anfrage: So arbeitet ein <em>[JavaScript]</em>-Client oder eine mobile App. Ein Browser fügt diesen Header nicht von selbst hinzu: Das Token wird aus dem Cookie gelesen;</li>
+<li>Zeilen 39–42: die <strong>Challenge</strong> tritt auf, wenn eine geschützte Seite ohne gültiges Token angefordert wird. Standardmäßig lautet die Antwort ein 401-Fehler ohne Inhalt: nützlich für einen <em>[JavaScript]</em>-Client, aber verwirrend für einen Benutzer. Der Benutzer wird daher auf die Anmeldeseite umgeleitet. <strong><em>[HandleResponse()]</em></strong> teilt <em>[JwtBearer]</em> mit, dass die Antwort bereits behandelt wird;</li>
+<li>Zeilen 56–57: die beiden Middleware-Komponenten in dieser Reihenfolge: zuerst wird bestimmt, wer der Benutzer ist, dann werden seine Berechtigungen geprüft.</li>
+</ul>
+<p>Die Datei <strong><em>[Controllers/AuthController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span>
+<span class="normal"><a href="#__codelineno-6-21">21</a></span>
+<span class="normal"><a href="#__codelineno-6-22">22</a></span>
+<span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span>
+<span class="normal"><a href="#__codelineno-6-39">39</a></span>
+<span class="normal"><a href="#__codelineno-6-40">40</a></span>
+<span class="normal"><a href="#__codelineno-6-41">41</a></span>
+<span class="normal"><a href="#__codelineno-6-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example25.Auth</span><span class="p">;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example25.Controllers</span><span class="p">;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">AuthController</span><span class="p">(</span><span class="n">AuthService</span><span class="w"> </span><span class="n">auth</span><span class="p">,</span><span class="w"> </span><span class="n">IConfiguration</span><span class="w"> </span><span class="n">configuration</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">    </span><span class="na">[HttpGet("/")]</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Home</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Redirect</span><span class="p">(</span><span class="s">"/profile"</span><span class="p">);</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="na">[HttpGet("login")]</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Form</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">View</span><span class="p">(</span><span class="s">"Login"</span><span class="p">);</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">    </span><span class="na">[HttpPost("login")]</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Login</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">password</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">auth</span><span class="p">.</span><span class="n">Validate</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="w">            </span><span class="c1">// eine bewusst vage Meldung: wir sagen nicht, ob es der Login oder das Passwort ist</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21"></a><span class="w">            </span><span class="n">ViewData</span><span class="p">[</span><span class="s">"Error"</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Incorrect login or password."</span><span class="p">;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22"></a><span class="w">            </span><span class="n">ViewData</span><span class="p">[</span><span class="s">"Login"</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">login</span><span class="p">;</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">"Login"</span><span class="p">);</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a><span class="w">        </span><span class="c1">// das Token in einem Cookie, das das JavaScript der Seite nicht lesen kann</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a><span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">AuthService</span><span class="p">.</span><span class="n">Cookie</span><span class="p">,</span><span class="w"> </span><span class="n">auth</span><span class="p">.</span><span class="n">CreateToken</span><span class="p">(</span><span class="n">user</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CookieOptions</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="w">            </span><span class="n">HttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a><span class="w">            </span><span class="n">SameSite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SameSiteMode</span><span class="p">.</span><span class="n">Lax</span><span class="p">,</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a><span class="w">            </span><span class="n">MaxAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Jwt:DurationMinutes"</span><span class="p">)),</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a><span class="w">        </span><span class="p">});</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"/profile"</span><span class="p">);</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a><span class="w">    </span><span class="c1">// das Abmelden ändert den Zustand des Benutzers: es ist ein POST</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a><span class="w">    </span><span class="na">[HttpPost("logout")]</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Logout</span><span class="p">()</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39"></a><span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Delete</span><span class="p">(</span><span class="n">AuthService</span><span class="p">.</span><span class="n">Cookie</span><span class="p">);</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"/login"</span><span class="p">);</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeilen 14–23: die Anmeldung. Schlägt sie fehl, wird das Formular mit einer bewusst vagen Meldung erneut angezeigt: Die Aussage „dieser Login existiert nicht“ würde einem Angreifer helfen, gültige Logins zu finden;</li>
+<li>Zeilen 26–32: Bei Erfolg wird das Token in einem [HttpOnly]-Cookie gespeichert; das <em>[JavaScript]</em> der Seite kann es nicht lesen, was das Token schützt, falls ein schädliches Skript auf der Seite ausgeführt würde. <strong><em>[SameSite = Lax]</em></strong>: Das Cookie wird bei POST-Anfragen von einer anderen Website nicht mitgesendet, was vor Request Forgery schützt (<em>[CSRF]</em>). Die Lebensdauer des Cookies entspricht der des Tokens;</li>
+<li>Zeilen 36–40: Die Abmeldung löscht das Cookie (<strong><em>[Cookies.Delete]</em></strong>). Dies ist ein POST: Er ändert den Zustand des Benutzers (siehe Beispiel 21).</li>
+</ul>
+<p>Die Datei <strong><em>[Controllers/ProfileController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Authorization</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example25.Controllers</span><span class="p">;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="c1">// [Authorize]: authentifizierten Benutzern vorbehalten</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="na">[Authorize]</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ProfileController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="p">{</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">    </span><span class="na">[HttpGet("profile")]</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Profile</span><span class="p">()</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">        </span><span class="c1">// User: der durch das Token authentifizierte Benutzer (HttpContext.User)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">User</span><span class="p">.</span><span class="n">Claims</span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Value</span><span class="p">)).</span><span class="n">ToList</span><span class="p">());</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 7: Das am Controller gesetzte Attribut <strong><em>[[Authorize]]</em></strong> beschränkt alle seine Aktionen auf authentifizierte Benutzer. Dies ist ein Autorisierungsfilter (siehe Kapitel 7). Ohne gültiges Token löst es die Challenge aus, was zu einer Umleitung nach <strong><em>[/login]</em></strong> führt;</li>
+<li>Zeile 14: <strong><em>[User]</em></strong> (der <strong><em>[HttpContext.User]</em></strong> der Anfrage) ist der Benutzer, den <em>[JwtBearer]</em> anhand des Tokens ermittelt hat. <strong><em>[User.Claims]</em></strong> ist die Liste seiner Claims; sie wird für die View in eine Liste von (Typ, Wert)-Paaren umgewandelt.</li>
+</ul>
+<p>Die Datei <strong><em>[Views/Profile/Profile.cshtml]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>@model List<span class="err">&lt;</span>(string Type, string Value)&gt;
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>Hello @User.Identity!.Name<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Your role: <span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>@(User.IsInRole("ADMIN") ? "administrator" : "user")<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>The content of your token:<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-sm w-auto"</span><span class="p">&gt;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>  @foreach (var (type, value) in Model)
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>  {
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span>@type<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span><span class="p">&gt;</span>@value<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>  }
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>@* Abmelden: ein POST-Formular, reduziert auf seinen Button *@
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span> <span class="na">action</span><span class="o">=</span><span class="s">"/logout"</span><span class="p">&gt;</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-outline-secondary"</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>Log out<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 2: Die Eigenschaft <strong><em>[User]</em></strong> ist auch in einer View verfügbar. Der Name ist der Claim [name] (siehe <strong><em>[NameClaimType]</em></strong>);</li>
+<li>Zeile 3: <strong><em>[IsInRole]</em></strong> prüft den Claim <strong><em>[role]</em></strong> (siehe <strong><em>[RoleClaimType]</em></strong>);</li>
+<li>Zeile 6: Die Schleife <strong>zerlegt</strong> jedes Paar in zwei Variablen;</li>
+<li>Zeile 12: Abmeldung über ein POST-Formular.</li>
+</ul>
+<p>Die Datei <strong><em>[Views/Auth/Login.cshtml]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span> <span class="na">action</span><span class="o">=</span><span class="s">"/login"</span><span class="p">&gt;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-2"</span><span class="p">&gt;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-label"</span> <span class="na">for</span><span class="o">=</span><span class="s">"login"</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-control"</span> <span class="na">id</span><span class="o">=</span><span class="s">"login"</span> <span class="na">name</span><span class="o">=</span><span class="s">"login"</span> <span class="na">value</span><span class="o">=</span><span class="s">"@ViewData["</span><span class="na">Login</span><span class="err">"]"</span> <span class="na">required</span><span class="p">&gt;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-3"</span><span class="p">&gt;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-label"</span> <span class="na">for</span><span class="o">=</span><span class="s">"password"</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-control"</span> <span class="na">type</span><span class="o">=</span><span class="s">"password"</span> <span class="na">id</span><span class="o">=</span><span class="s">"password"</span> <span class="na">name</span><span class="o">=</span><span class="s">"password"</span> <span class="na">required</span><span class="p">&gt;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>Log in<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>@if (ViewData["Error"] is string error)
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>{
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger mt-3"</span><span class="p">&gt;</span>@error<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>}
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-muted small mt-3"</span><span class="p">&gt;</span>Test accounts (password = login): marie (USER), admin (ADMIN).<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="811-ausfuhrung">8.1.1. <span style="color: #1f4d78">Ausführung</span></h3>
+<p>Ohne Cookie leitet die geschützte Seite auf die Anmeldeseite um:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>curl -i http://localhost:5000/profile
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>HTTP/1.1 302 Found
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>Content-Length: 0
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>Location: /login
+</code></pre></div></td></tr></table></div>
+<p><img src="images/10000000000002BE0000016EE5ACC941.png" width="428" height="223" style="width:11.322cm;height:5.904cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000016EE5ACC941.png" /></p>
+<p>Ein falsches Passwort:</p>
+<p><img src="images/10000000000002BE000001B890ECD53D.png" width="428" height="268" style="width:11.322cm;height:7.096cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001B890ECD53D.png" /></p>
+<p>Erfolgreiche Anmeldung, gesehen mit <em>[curl]</em>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>curl -i -c cookies.txt -d "login=marie&amp;password=marie" http://localhost:5000/login
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>HTTP/1.1 302 Found
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>Content-Length: 0
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>Location: /profile
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>Set-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3OTAzMzU1MzgsInN1YiI6Im1hcmllIiwibmFtZSI6Ik1hcmllIFDDqWxpc3NpZXIiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc5MDMzMTkzOCwibmJmIjoxNzkwMzMxOTM4fQ.uAKi5OB-jReuSrQR12_AWdiLR1l6ZLORBYSfHwg99xk; max-age=3600; path=/; samesite=lax; httponly
+</code></pre></div></td></tr></table></div>
+<p>Das Token besteht aus drei durch Punkte getrennten Teilen: einem Header, dem Inhalt und der Signatur. Die ersten beiden sind lediglich mit <em>[base64url]</em> codiert. Der decodierte Header:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="p">{</span><span class="nt">"alg"</span><span class="p">:</span><span class="s2">"HS256"</span><span class="p">,</span><span class="nt">"typ"</span><span class="p">:</span><span class="s2">"JWT"</span><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>(der Signaturalgorithmus und der Tokentyp). Der decodierte Inhalt:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span>
+<span class="normal"><a href="#__codelineno-15-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="w">  </span><span class="nt">"exp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1790335538</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="w">  </span><span class="nt">"sub"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marie"</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Marie Pélissier"</span><span class="p">,</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="w">  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USER"</span><span class="p">,</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="w">  </span><span class="nt">"iat"</span><span class="p">:</span><span class="w"> </span><span class="mi">1790331938</span><span class="p">,</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="w">  </span><span class="nt">"nbf"</span><span class="p">:</span><span class="w"> </span><span class="mi">1790331938</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Wir finden die von <strong><em>[CreateToken]</em></strong> erzeugten Claims, dazu drei von <strong><em>[JsonWebTokenHandler]</em></strong> hinzugefügte Felder: <strong><em>[exp]</em></strong> (das Ablaufdatum), <strong><em>[iat]</em></strong> (<em>[issued at]</em>, das Erstellungsdatum) und <strong><em>[nbf]</em></strong> (<em>[not before]</em>, das Datum, ab dem das Token gültig ist), jeweils in Sekunden seit dem 1. Januar 1970. Das Token ist nicht verschlüsselt: Es enthält keine vertraulichen Informationen. Im Browser, unter der URL<a href="http://localhost:5000/profil"><u><span style="color: #0563c1"> http://localhost:5000/profile:</span></u></a></p>
+<p><img src="images/10000000000002BE000001BB253E5DEA.png" width="428" height="270" style="width:11.322cm;height:7.146cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001BB253E5DEA.png" /></p>
+<p>Versuchen wir nun, das Token so zu verändern, dass wir uns die Rolle ADMIN zuweisen: Wir decodieren den Inhalt, ersetzen <strong><em>[USER]</em></strong> durch <strong><em>[ADMIN]</em></strong> und codieren ihn neu … aber ohne den geheimen Schlüssel können wir die Signatur nicht neu berechnen:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>curl -i -b "token=eyJhbGciOi...(modified content)...(old signature)" http://localhost:5000/profile
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>HTTP/1.1 302 Found
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>Content-Length: 0
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>Location: /login
+</code></pre></div></td></tr></table></div>
+<p>Die Signatur passt nicht mehr zum Inhalt: Das Token wird abgelehnt, der Benutzer ist nicht authentifiziert, und <strong><em>[[Authorize]]</em></strong> leitet auf die Anmeldeseite um. Abmeldung:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>curl -i -b cookies.txt -X POST http://localhost:5000/logout
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>HTTP/1.1 302 Found
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>Content-Length: 0
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a>Location: /login
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a>Set-Cookie: token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/
+</code></pre></div></td></tr></table></div>
+<p>Der Server löscht das Cookie, indem er es leer und mit einem abgelaufenen Ablaufdatum neu setzt.</p>
+<h2 id="82-beispiel-26-rollen">8.2. <span style="color: #2e74b5">Beispiel 26: Rollen</span></h2>
+<p>Beispiel 26 baut auf Beispiel 25 auf und fügt eine Seite hinzu, die der Rolle ADMIN vorbehalten ist. Mit <em>[ASP.NET Core]</em> ist dafür fast nichts zu schreiben: Die Rolle ist ein Claim im Token, und <strong><em>[[Authorize]]</em></strong> kann sie prüfen. Die Datei <strong><em>[Controllers/AdminController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span>
+<span class="normal"><a href="#__codelineno-20-12">12</a></span>
+<span class="normal"><a href="#__codelineno-20-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Authorization</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example26.Controllers</span><span class="p">;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="c1">// der gesamte Controller ist der Rolle ADMIN vorbehalten: man muss authentifiziert sein</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="c1">// UND den Claim "role" mit dem Wert "ADMIN" haben (siehe RoleClaimType in Program.cs)</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="na">[Authorize(Roles = "ADMIN")]</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AdminController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="p">{</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="w">    </span><span class="na">[HttpGet("admin")]</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Admin</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">View</span><span class="p">();</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 8: Der gesamte Controller ist der Rolle ADMIN vorbehalten. Der Filter prüft zuerst, ob der Benutzer authentifiziert ist (falls nicht: Challenge, d. h. die Anmeldeseite), dann, ob er die verlangte Rolle hat (falls nicht: Antwort 403, „Zugriff verweigert“). <strong><em>[Roles = &quot;ADMIN,DOCTOR&quot;]</em></strong> würde jede dieser beiden Rollen akzeptieren.</li>
+</ul>
+<p>Die Datei <strong><em>[Program.cs]</em></strong> enthält nur eine zusätzliche Zeile:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span>
+<span class="normal"><a href="#__codelineno-21-11">11</a></span>
+<span class="normal"><a href="#__codelineno-21-12">12</a></span>
+<span class="normal"><a href="#__codelineno-21-13">13</a></span>
+<span class="normal"><a href="#__codelineno-21-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="kt">var</span><span class="w"> </span><span class="n">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="c1">// 403 (unzureichende Rolle), 404...: eine Fehlerseite</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="n">app</span><span class="p">.</span><span class="n">UseStatusCodePagesWithReExecute</span><span class="p">(</span><span class="s">"/error/{0}"</span><span class="p">);</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="n">app</span><span class="p">.</span><span class="n">UseStaticFiles</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StaticFileOptions</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a><span class="p">{</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="w">    </span><span class="n">FileProvider</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PhysicalFileProvider</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">GetFullPath</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Environment</span><span class="p">.</span><span class="n">ContentRootPath</span><span class="p">,</span><span class="w"> </span><span class="s">".."</span><span class="p">,</span><span class="w"> </span><span class="s">"common"</span><span class="p">,</span><span class="w"> </span><span class="s">"bootstrap"</span><span class="p">))),</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a><span class="w">    </span><span class="n">RequestPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"/bootstrap"</span><span class="p">,</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9"></a><span class="p">});</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a><span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span><span class="w"> </span><span class="c1">// wer ist es? -&gt; HttpContext.User</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11"></a><span class="n">app</span><span class="p">.</span><span class="n">UseAuthorization</span><span class="p">();</span><span class="w">  </span><span class="c1">// ist es erlaubt? -&gt; [Authorize]</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12"></a>
+<a id="__codelineno-21-13" name="__codelineno-21-13"></a><span class="n">app</span><span class="p">.</span><span class="n">MapControllers</span><span class="p">();</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14"></a><span class="n">app</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 4: Die 403-Antwort hat keinen Inhalt; sie wird vom Controller <strong><em>[ErrorController]</em></strong> als Seite dargestellt (siehe Beispiel 24).</li>
+</ul>
+<p>Der Benutzer <strong><em>[marie]</em></strong> (Rolle USER) versucht, von seinem Profil aus die Verwaltungsseite zu öffnen:</p>
+<p><img src="images/10000000000002BE000001E31AFF3C5B.png" width="428" height="294" style="width:11.322cm;height:7.791cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001E31AFF3C5B.png" /></p>
+<p><img src="images/10000000000002BE000000DE69FBEF60.png" width="428" height="135" style="width:11.322cm;height:3.581cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000DE69FBEF60.png" /></p>
+<p>Derselbe Versuch durch <strong><em>[admin]</em></strong>:</p>
+<p><img src="images/10000000000002BE000000D76EC2FC40.png" width="428" height="131" style="width:11.322cm;height:3.468cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000D76EC2FC40.png" /></p>
+<p>Mit <em>[curl]</em> sehen wir einen 403-Fehler:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>curl -i -c cookies.txt -d "login=marie&amp;password=marie" http://localhost:5000/login
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>curl -i -b cookies.txt http://localhost:5000/admin
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-23-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-23-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-23-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-23-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-23-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-23-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-23-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-23-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-23-10">10</a></span>
+<span class="normal"><a href="#__codelineno-23-11">11</a></span>
+<span class="normal"><a href="#__codelineno-23-12">12</a></span>
+<span class="normal"><a href="#__codelineno-23-13">13</a></span>
+<span class="normal"><a href="#__codelineno-23-14">14</a></span>
+<span class="normal"><a href="#__codelineno-23-15">15</a></span>
+<span class="normal"><a href="#__codelineno-23-16">16</a></span>
+<span class="normal"><a href="#__codelineno-23-17">17</a></span>
+<span class="normal"><a href="#__codelineno-23-18">18</a></span>
+<span class="normal"><a href="#__codelineno-23-19">19</a></span>
+<span class="normal"><a href="#__codelineno-23-20">20</a></span>
+<span class="normal"><a href="#__codelineno-23-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>HTTP/1.1 403 Forbidden
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4"></a>&lt;!doctype html&gt;
+<a id="__codelineno-23-5" name="__codelineno-23-5"></a>&lt;html lang="en"&gt;
+<a id="__codelineno-23-6" name="__codelineno-23-6"></a>&lt;head&gt;
+<a id="__codelineno-23-7" name="__codelineno-23-7"></a>  &lt;meta charset="utf-8"&gt;
+<a id="__codelineno-23-8" name="__codelineno-23-8"></a>  &lt;title&gt;Authentication&lt;/title&gt;
+<a id="__codelineno-23-9" name="__codelineno-23-9"></a>  &lt;link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"&gt;
+<a id="__codelineno-23-10" name="__codelineno-23-10"></a>&lt;/head&gt;
+<a id="__codelineno-23-11" name="__codelineno-23-11"></a>&lt;body&gt;
+<a id="__codelineno-23-12" name="__codelineno-23-12"></a>  &lt;div class="container py-3" style="max-width: 34rem"&gt;
+<a id="__codelineno-23-13" name="__codelineno-23-13"></a>    &lt;div class="alert alert-danger"&gt;
+<a id="__codelineno-23-14" name="__codelineno-23-14"></a>  &lt;h1 class="h4"&gt;Error 403&lt;/h1&gt;
+<a id="__codelineno-23-15" name="__codelineno-23-15"></a>  &lt;p class="mb-0"&gt;Access denied: this page is reserved for administrators.&lt;/p&gt;
+<a id="__codelineno-23-16" name="__codelineno-23-16"></a>&lt;/div&gt;
+<a id="__codelineno-23-17" name="__codelineno-23-17"></a>&lt;p&gt;&lt;a href="/profile"&gt;Back to the profile&lt;/a&gt;&lt;/p&gt;
+<a id="__codelineno-23-18" name="__codelineno-23-18"></a>
+<a id="__codelineno-23-19" name="__codelineno-23-19"></a>  &lt;/div&gt;
+<a id="__codelineno-23-20" name="__codelineno-23-20"></a>&lt;/body&gt;
+<a id="__codelineno-23-21" name="__codelineno-23-21"></a>&lt;/html&gt;
+</code></pre></div></td></tr></table></div>
+<p>Die Fallstudie hat drei Rollen (ADMIN, DOCTOR, USER) und verwendet genau diese Attribute: <strong><em>[[Authorize]]</em></strong> bei allen Seiten-Controllern, <strong><em>[[Authorize(Roles = &quot;ADMIN&quot;)]]</em></strong> für die Verwaltung von Ärzten und Klienten und <strong><em>[[Authorize(Roles = &quot;USER&quot;)]]</em></strong> für den Patientenbereich. Die 403-Seite ist dort übersetzt.</p>
+<h2 id="83-beispiel-27-captcha-und-begrenzung-der-versuche">8.3. <span style="color: #2e74b5">Beispiel 27: CAPTCHA und Begrenzung der Versuche</span></h2>
+<p>Eine Anmeldeseite zieht Bots an: Programme, die Tausende von Login-/Passwort-Kombinationen ausprobieren. Zwei sich ergänzende Schutzmaßnahmen:</p>
+<ul>
+<li>ein <strong>CAPTCHA</strong>: ein Bild mit verzerrten Zeichen, das ein Mensch leicht lesen kann, ein einfacher Bot jedoch nicht entziffern kann;</li>
+<li>eine <strong>Begrenzung der Versuche</strong>: Nach einigen fehlgeschlagenen Versuchen wird die IP-Adresse für eine Weile gesperrt.</li>
+</ul>
+<p>Beispiel 27 fügt Beispiel 25 diese beiden Schutzmaßnahmen hinzu. Die Datei <strong><em>[Auth/CaptchaService.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-24-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-24-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-24-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-24-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-24-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-24-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-24-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-24-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-24-10">10</a></span>
+<span class="normal"><a href="#__codelineno-24-11">11</a></span>
+<span class="normal"><a href="#__codelineno-24-12">12</a></span>
+<span class="normal"><a href="#__codelineno-24-13">13</a></span>
+<span class="normal"><a href="#__codelineno-24-14">14</a></span>
+<span class="normal"><a href="#__codelineno-24-15">15</a></span>
+<span class="normal"><a href="#__codelineno-24-16">16</a></span>
+<span class="normal"><a href="#__codelineno-24-17">17</a></span>
+<span class="normal"><a href="#__codelineno-24-18">18</a></span>
+<span class="normal"><a href="#__codelineno-24-19">19</a></span>
+<span class="normal"><a href="#__codelineno-24-20">20</a></span>
+<span class="normal"><a href="#__codelineno-24-21">21</a></span>
+<span class="normal"><a href="#__codelineno-24-22">22</a></span>
+<span class="normal"><a href="#__codelineno-24-23">23</a></span>
+<span class="normal"><a href="#__codelineno-24-24">24</a></span>
+<span class="normal"><a href="#__codelineno-24-25">25</a></span>
+<span class="normal"><a href="#__codelineno-24-26">26</a></span>
+<span class="normal"><a href="#__codelineno-24-27">27</a></span>
+<span class="normal"><a href="#__codelineno-24-28">28</a></span>
+<span class="normal"><a href="#__codelineno-24-29">29</a></span>
+<span class="normal"><a href="#__codelineno-24-30">30</a></span>
+<span class="normal"><a href="#__codelineno-24-31">31</a></span>
+<span class="normal"><a href="#__codelineno-24-32">32</a></span>
+<span class="normal"><a href="#__codelineno-24-33">33</a></span>
+<span class="normal"><a href="#__codelineno-24-34">34</a></span>
+<span class="normal"><a href="#__codelineno-24-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Concurrent</span><span class="p">;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example27.Auth</span><span class="p">;</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="c1">// ein CAPTCHA: seine Kennung und sein Bild (SVG)</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6"></a><span class="k">public</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="nf">Captcha</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Id</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Svg</span><span class="p">);</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7"></a>
+<a id="__codelineno-24-8" name="__codelineno-24-8"></a><span class="c1">// Singleton: die ausstehenden CAPTCHAs werden vom Server im Speicher gehalten</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CaptchaService</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10"></a><span class="p">{</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">TimeSpan</span><span class="w"> </span><span class="n">Lifetime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12"></a>
+<a id="__codelineno-24-13" name="__codelineno-24-13"></a><span class="w">    </span><span class="c1">// Kennung -&gt; (erwartete Antwort, Ablaufdatum).</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14"></a><span class="w">    </span><span class="c1">// ConcurrentDictionary: ein Dictionary, das von mehreren gleichzeitigen Anfragen genutzt werden kann</span>
+<a id="__codelineno-24-15" name="__codelineno-24-15"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">ConcurrentDictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Text</span><span class="p">,</span><span class="w"> </span><span class="n">DateTime</span><span class="w"> </span><span class="n">Expires</span><span class="p">)</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pending</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<a id="__codelineno-24-16" name="__codelineno-24-16"></a>
+<a id="__codelineno-24-17" name="__codelineno-24-17"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Captcha</span><span class="w"> </span><span class="nf">Generate</span><span class="p">()</span>
+<a id="__codelineno-24-18" name="__codelineno-24-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-24-19" name="__codelineno-24-19"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CaptchaDrawing</span><span class="p">.</span><span class="n">RandomText</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<a id="__codelineno-24-20" name="__codelineno-24-20"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">().</span><span class="n">ToString</span><span class="p">();</span><span class="w"> </span><span class="c1">// eine zufällige, nicht zu erratende Kennung</span>
+<a id="__codelineno-24-21" name="__codelineno-24-21"></a><span class="w">        </span><span class="n">pending</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Lifetime</span><span class="p">);</span>
+<a id="__codelineno-24-22" name="__codelineno-24-22"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">Captcha</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">CaptchaDrawing</span><span class="p">.</span><span class="n">Svg</span><span class="p">(</span><span class="n">text</span><span class="p">));</span>
+<a id="__codelineno-24-23" name="__codelineno-24-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-24-24" name="__codelineno-24-24"></a>
+<a id="__codelineno-24-25" name="__codelineno-24-25"></a><span class="w">    </span><span class="c1">// das CAPTCHA wird in jedem Fall VERBRAUCHT: ein Bild wird nur einmal verwendet</span>
+<a id="__codelineno-24-26" name="__codelineno-24-26"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Check</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">input</span><span class="p">)</span>
+<a id="__codelineno-24-27" name="__codelineno-24-27"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-24-28" name="__codelineno-24-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">pending</span><span class="p">.</span><span class="n">TryRemove</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">expected</span><span class="p">))</span>
+<a id="__codelineno-24-29" name="__codelineno-24-29"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-24-30" name="__codelineno-24-30"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<a id="__codelineno-24-31" name="__codelineno-24-31"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-24-32" name="__codelineno-24-32"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">expected</span><span class="p">.</span><span class="n">Expires</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span>
+<a id="__codelineno-24-33" name="__codelineno-24-33"></a><span class="w">            </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">expected</span><span class="p">.</span><span class="n">Text</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">Trim</span><span class="p">(),</span><span class="w"> </span><span class="n">StringComparison</span><span class="p">.</span><span class="n">OrdinalIgnoreCase</span><span class="p">);</span>
+<a id="__codelineno-24-34" name="__codelineno-24-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-24-35" name="__codelineno-24-35"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code Schritt für Schritt durch:</p>
+<ul>
+<li>Zeile 15: Die erwarteten Antworten werden vom Server unter einer zufälligen Kennung gespeichert. Die Seite enthält nur das Bild und die Kennung: Die Antwort verlässt den Server nie. Der Service ist ein Singleton, das von gleichzeitigen Anfragen verwendet wird: <strong><em>[ConcurrentDictionary]</em></strong> ist ein Dictionary, das genau dafür gedacht ist;</li>
+<li>Zeilen 17–22: Eine Zeichenkette aus fünf Zeichen wird zufällig ausgewählt, gespeichert und als Bild gezeichnet. Das Zeichnen übernimmt die Klasse <strong><em>[CaptchaDrawing]</em></strong> (Datei <strong><em>[Auth/CaptchaDrawing.cs]</em></strong>, aus der Fallstudie übernommen und dort Zeile für Zeile kommentiert): Jedes Zeichen besteht aus einer Menge von Linien, die vergrößert, geneigt und zufällig verzerrt werden, und das Bild wird durch drei Kurven verwischt. Leicht verwechselbare Zeichen (0 und O, 1, I und L) sind ausgeschlossen;</li>
+<li>Zeilen 26–33: Die Überprüfung <strong>verbraucht</strong> das CAPTCHA (<strong><em>[TryRemove]</em></strong> entfernt es aus dem Dictionary): Ein Bild wird nur einmal verwendet; ein Bot kann eine bereits gefundene Lösung nicht wiederverwenden. Die Groß- und Kleinschreibung spielt keine Rolle.</li>
+</ul>
+<p>Die Datei <strong><em>[Auth/LimiterService.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span>
+<span class="normal"><a href="#__codelineno-25-11">11</a></span>
+<span class="normal"><a href="#__codelineno-25-12">12</a></span>
+<span class="normal"><a href="#__codelineno-25-13">13</a></span>
+<span class="normal"><a href="#__codelineno-25-14">14</a></span>
+<span class="normal"><a href="#__codelineno-25-15">15</a></span>
+<span class="normal"><a href="#__codelineno-25-16">16</a></span>
+<span class="normal"><a href="#__codelineno-25-17">17</a></span>
+<span class="normal"><a href="#__codelineno-25-18">18</a></span>
+<span class="normal"><a href="#__codelineno-25-19">19</a></span>
+<span class="normal"><a href="#__codelineno-25-20">20</a></span>
+<span class="normal"><a href="#__codelineno-25-21">21</a></span>
+<span class="normal"><a href="#__codelineno-25-22">22</a></span>
+<span class="normal"><a href="#__codelineno-25-23">23</a></span>
+<span class="normal"><a href="#__codelineno-25-24">24</a></span>
+<span class="normal"><a href="#__codelineno-25-25">25</a></span>
+<span class="normal"><a href="#__codelineno-25-26">26</a></span>
+<span class="normal"><a href="#__codelineno-25-27">27</a></span>
+<span class="normal"><a href="#__codelineno-25-28">28</a></span>
+<span class="normal"><a href="#__codelineno-25-29">29</a></span>
+<span class="normal"><a href="#__codelineno-25-30">30</a></span>
+<span class="normal"><a href="#__codelineno-25-31">31</a></span>
+<span class="normal"><a href="#__codelineno-25-32">32</a></span>
+<span class="normal"><a href="#__codelineno-25-33">33</a></span>
+<span class="normal"><a href="#__codelineno-25-34">34</a></span>
+<span class="normal"><a href="#__codelineno-25-35">35</a></span>
+<span class="normal"><a href="#__codelineno-25-36">36</a></span>
+<span class="normal"><a href="#__codelineno-25-37">37</a></span>
+<span class="normal"><a href="#__codelineno-25-38">38</a></span>
+<span class="normal"><a href="#__codelineno-25-39">39</a></span>
+<span class="normal"><a href="#__codelineno-25-40">40</a></span>
+<span class="normal"><a href="#__codelineno-25-41">41</a></span>
+<span class="normal"><a href="#__codelineno-25-42">42</a></span>
+<span class="normal"><a href="#__codelineno-25-43">43</a></span>
+<span class="normal"><a href="#__codelineno-25-44">44</a></span>
+<span class="normal"><a href="#__codelineno-25-45">45</a></span>
+<span class="normal"><a href="#__codelineno-25-46">46</a></span>
+<span class="normal"><a href="#__codelineno-25-47">47</a></span>
+<span class="normal"><a href="#__codelineno-25-48">48</a></span>
+<span class="normal"><a href="#__codelineno-25-49">49</a></span>
+<span class="normal"><a href="#__codelineno-25-50">50</a></span>
+<span class="normal"><a href="#__codelineno-25-51">51</a></span>
+<span class="normal"><a href="#__codelineno-25-52">52</a></span>
+<span class="normal"><a href="#__codelineno-25-53">53</a></span>
+<span class="normal"><a href="#__codelineno-25-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example27.Auth</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="c1">// Singleton: zählt die Login-Fehlversuche jeder IP-Adresse</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LimiterService</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="p">{</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MaxFailures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">TimeSpan</span><span class="w"> </span><span class="n">BlockDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8"></a>
+<a id="__codelineno-25-9" name="__codelineno-25-9"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Counter</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11"></a><span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Failures</span><span class="p">;</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12"></a><span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">DateTime</span><span class="w"> </span><span class="n">BlockedUntil</span><span class="p">;</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14"></a>
+<a id="__codelineno-25-15" name="__codelineno-25-15"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="n">Counter</span><span class="o">&gt;</span><span class="w"> </span><span class="n">counters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<a id="__codelineno-25-16" name="__codelineno-25-16"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">Lock</span><span class="w"> </span><span class="n">padlock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span><span class="w"> </span><span class="c1">// mehrere gleichzeitige Anfragen: ein Zugriff nach dem anderen</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17"></a>
+<a id="__codelineno-25-18" name="__codelineno-25-18"></a><span class="w">    </span><span class="c1">// die Anzahl der verbleibenden Sperrsekunden (0: nicht gesperrt)</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">BlockedSeconds</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">ip</span><span class="p">)</span>
+<a id="__codelineno-25-20" name="__codelineno-25-20"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-25-21" name="__codelineno-25-21"></a><span class="w">        </span><span class="k">lock</span><span class="w"> </span><span class="p">(</span><span class="n">padlock</span><span class="p">)</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">counters</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">c</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-25-24" name="__codelineno-25-24"></a><span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">remaining</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">BlockedUntil</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">;</span>
+<a id="__codelineno-25-25" name="__codelineno-25-25"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">remaining</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">Zero</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">Math</span><span class="p">.</span><span class="n">Ceiling</span><span class="p">(</span><span class="n">remaining</span><span class="p">.</span><span class="n">TotalSeconds</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-25-26" name="__codelineno-25-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-25-27" name="__codelineno-25-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-28" name="__codelineno-25-28"></a>
+<a id="__codelineno-25-29" name="__codelineno-25-29"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Failure</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">ip</span><span class="p">)</span>
+<a id="__codelineno-25-30" name="__codelineno-25-30"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-25-31" name="__codelineno-25-31"></a><span class="w">        </span><span class="k">lock</span><span class="w"> </span><span class="p">(</span><span class="n">padlock</span><span class="p">)</span>
+<a id="__codelineno-25-32" name="__codelineno-25-32"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-25-33" name="__codelineno-25-33"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">counters</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">c</span><span class="p">))</span>
+<a id="__codelineno-25-34" name="__codelineno-25-34"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-25-35" name="__codelineno-25-35"></a><span class="w">                </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Counter</span><span class="p">();</span>
+<a id="__codelineno-25-36" name="__codelineno-25-36"></a><span class="w">                </span><span class="n">counters</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<a id="__codelineno-25-37" name="__codelineno-25-37"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-25-38" name="__codelineno-25-38"></a><span class="w">            </span><span class="n">c</span><span class="p">.</span><span class="n">Failures</span><span class="o">++</span><span class="p">;</span>
+<a id="__codelineno-25-39" name="__codelineno-25-39"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">Failures</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">MaxFailures</span><span class="p">)</span>
+<a id="__codelineno-25-40" name="__codelineno-25-40"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-25-41" name="__codelineno-25-41"></a><span class="w">                </span><span class="n">c</span><span class="p">.</span><span class="n">BlockedUntil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">BlockDuration</span><span class="p">;</span>
+<a id="__codelineno-25-42" name="__codelineno-25-42"></a><span class="w">                </span><span class="n">c</span><span class="p">.</span><span class="n">Failures</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// nach der Sperre beginnen wir wieder bei null</span>
+<a id="__codelineno-25-43" name="__codelineno-25-43"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-25-44" name="__codelineno-25-44"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-25-45" name="__codelineno-25-45"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-46" name="__codelineno-25-46"></a>
+<a id="__codelineno-25-47" name="__codelineno-25-47"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Success</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">ip</span><span class="p">)</span>
+<a id="__codelineno-25-48" name="__codelineno-25-48"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-25-49" name="__codelineno-25-49"></a><span class="w">        </span><span class="k">lock</span><span class="w"> </span><span class="p">(</span><span class="n">padlock</span><span class="p">)</span>
+<a id="__codelineno-25-50" name="__codelineno-25-50"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-25-51" name="__codelineno-25-51"></a><span class="w">            </span><span class="n">counters</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span>
+<a id="__codelineno-25-52" name="__codelineno-25-52"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-25-53" name="__codelineno-25-53"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-54" name="__codelineno-25-54"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 6–7: Drei fehlgeschlagene Versuche sperren die IP-Adresse für eine Minute;</li>
+<li>Zeile 16: Das Dictionary der Zähler wird von allen Anfragen gemeinsam genutzt. Die Anweisung <strong><em>[lock (padlock) { ... }]</em></strong> stellt sicher, dass immer nur eine Anfrage den Block ausführt: Zwei gleichzeitige Fehlversuche können so nicht verloren gehen (siehe <strong><em>[Interlocked]</em></strong>, Kapitel 6). <strong><em>[Lock]</em></strong> ist der Sperrtyp ab <em>[.NET] 9 und in späteren Versionen;</em></li>
+<li>Zeilen 19–25: die verbleibende Sperrzeit;</li>
+<li>Zeilen 29–42: Ein Fehlversuch wird gezählt; beim dritten Fehlversuch wird die Adresse gesperrt;</li>
+<li>Zeilen 47–51: Ein Erfolg setzt den Zähler auf null zurück.</li>
+</ul>
+<p>Die Datei <strong><em>[Controllers/AuthController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-26-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-26-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-26-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-26-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-26-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-26-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-26-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span>
+<span class="normal"><a href="#__codelineno-26-13">13</a></span>
+<span class="normal"><a href="#__codelineno-26-14">14</a></span>
+<span class="normal"><a href="#__codelineno-26-15">15</a></span>
+<span class="normal"><a href="#__codelineno-26-16">16</a></span>
+<span class="normal"><a href="#__codelineno-26-17">17</a></span>
+<span class="normal"><a href="#__codelineno-26-18">18</a></span>
+<span class="normal"><a href="#__codelineno-26-19">19</a></span>
+<span class="normal"><a href="#__codelineno-26-20">20</a></span>
+<span class="normal"><a href="#__codelineno-26-21">21</a></span>
+<span class="normal"><a href="#__codelineno-26-22">22</a></span>
+<span class="normal"><a href="#__codelineno-26-23">23</a></span>
+<span class="normal"><a href="#__codelineno-26-24">24</a></span>
+<span class="normal"><a href="#__codelineno-26-25">25</a></span>
+<span class="normal"><a href="#__codelineno-26-26">26</a></span>
+<span class="normal"><a href="#__codelineno-26-27">27</a></span>
+<span class="normal"><a href="#__codelineno-26-28">28</a></span>
+<span class="normal"><a href="#__codelineno-26-29">29</a></span>
+<span class="normal"><a href="#__codelineno-26-30">30</a></span>
+<span class="normal"><a href="#__codelineno-26-31">31</a></span>
+<span class="normal"><a href="#__codelineno-26-32">32</a></span>
+<span class="normal"><a href="#__codelineno-26-33">33</a></span>
+<span class="normal"><a href="#__codelineno-26-34">34</a></span>
+<span class="normal"><a href="#__codelineno-26-35">35</a></span>
+<span class="normal"><a href="#__codelineno-26-36">36</a></span>
+<span class="normal"><a href="#__codelineno-26-37">37</a></span>
+<span class="normal"><a href="#__codelineno-26-38">38</a></span>
+<span class="normal"><a href="#__codelineno-26-39">39</a></span>
+<span class="normal"><a href="#__codelineno-26-40">40</a></span>
+<span class="normal"><a href="#__codelineno-26-41">41</a></span>
+<span class="normal"><a href="#__codelineno-26-42">42</a></span>
+<span class="normal"><a href="#__codelineno-26-43">43</a></span>
+<span class="normal"><a href="#__codelineno-26-44">44</a></span>
+<span class="normal"><a href="#__codelineno-26-45">45</a></span>
+<span class="normal"><a href="#__codelineno-26-46">46</a></span>
+<span class="normal"><a href="#__codelineno-26-47">47</a></span>
+<span class="normal"><a href="#__codelineno-26-48">48</a></span>
+<span class="normal"><a href="#__codelineno-26-49">49</a></span>
+<span class="normal"><a href="#__codelineno-26-50">50</a></span>
+<span class="normal"><a href="#__codelineno-26-51">51</a></span>
+<span class="normal"><a href="#__codelineno-26-52">52</a></span>
+<span class="normal"><a href="#__codelineno-26-53">53</a></span>
+<span class="normal"><a href="#__codelineno-26-54">54</a></span>
+<span class="normal"><a href="#__codelineno-26-55">55</a></span>
+<span class="normal"><a href="#__codelineno-26-56">56</a></span>
+<span class="normal"><a href="#__codelineno-26-57">57</a></span>
+<span class="normal"><a href="#__codelineno-26-58">58</a></span>
+<span class="normal"><a href="#__codelineno-26-59">59</a></span>
+<span class="normal"><a href="#__codelineno-26-60">60</a></span>
+<span class="normal"><a href="#__codelineno-26-61">61</a></span>
+<span class="normal"><a href="#__codelineno-26-62">62</a></span>
+<span class="normal"><a href="#__codelineno-26-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example27.Auth</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example27.Controllers</span><span class="p">;</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">AuthController</span><span class="p">(</span><span class="n">AuthService</span><span class="w"> </span><span class="n">auth</span><span class="p">,</span><span class="w"> </span><span class="n">CaptchaService</span><span class="w"> </span><span class="n">captchas</span><span class="p">,</span><span class="w"> </span><span class="n">LimiterService</span><span class="w"> </span><span class="n">limiter</span><span class="p">,</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="w">    </span><span class="n">IConfiguration</span><span class="w"> </span><span class="n">configuration</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8"></a><span class="p">{</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9"></a><span class="w">    </span><span class="na">[HttpGet("/")]</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Home</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Redirect</span><span class="p">(</span><span class="s">"/profile"</span><span class="p">);</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11"></a>
+<a id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="w">    </span><span class="na">[HttpGet("login")]</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Form</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">LoginPage</span><span class="p">(</span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14"></a>
+<a id="__codelineno-26-15" name="__codelineno-26-15"></a><span class="w">    </span><span class="na">[HttpPost("login")]</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Login</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">captchaId</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">captcha</span><span class="p">)</span>
+<a id="__codelineno-26-17" name="__codelineno-26-17"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-26-18" name="__codelineno-26-18"></a><span class="w">        </span><span class="c1">// die IP-Adresse des Clients</span>
+<a id="__codelineno-26-19" name="__codelineno-26-19"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpContext</span><span class="p">.</span><span class="n">Connection</span><span class="p">.</span><span class="n">RemoteIpAddress</span><span class="o">?.</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s">"?"</span><span class="p">;</span>
+<a id="__codelineno-26-20" name="__codelineno-26-20"></a>
+<a id="__codelineno-26-21" name="__codelineno-26-21"></a><span class="w">        </span><span class="c1">// 1. eine gesperrte Adresse wird gar nicht erst beachtet</span>
+<a id="__codelineno-26-22" name="__codelineno-26-22"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limiter</span><span class="p">.</span><span class="n">BlockedSeconds</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span>
+<a id="__codelineno-26-23" name="__codelineno-26-23"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">seconds</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-26-24" name="__codelineno-26-24"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-26-25" name="__codelineno-26-25"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">LoginPage</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="s">$"Too many attempts: try again in {seconds} s."</span><span class="p">);</span>
+<a id="__codelineno-26-26" name="__codelineno-26-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-26-27" name="__codelineno-26-27"></a><span class="w">        </span><span class="c1">// 2. zuerst das CAPTCHA (billig), dann das Passwort (bcrypt, teuer)</span>
+<a id="__codelineno-26-28" name="__codelineno-26-28"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">captchas</span><span class="p">.</span><span class="n">Check</span><span class="p">(</span><span class="n">captchaId</span><span class="p">,</span><span class="w"> </span><span class="n">captcha</span><span class="p">))</span>
+<a id="__codelineno-26-29" name="__codelineno-26-29"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-26-30" name="__codelineno-26-30"></a><span class="w">            </span><span class="n">limiter</span><span class="p">.</span><span class="n">Failure</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span>
+<a id="__codelineno-26-31" name="__codelineno-26-31"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">LoginPage</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="s">"The image code is incorrect."</span><span class="p">);</span>
+<a id="__codelineno-26-32" name="__codelineno-26-32"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-26-33" name="__codelineno-26-33"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">auth</span><span class="p">.</span><span class="n">Validate</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+<a id="__codelineno-26-34" name="__codelineno-26-34"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<a id="__codelineno-26-35" name="__codelineno-26-35"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-26-36" name="__codelineno-26-36"></a><span class="w">            </span><span class="n">limiter</span><span class="p">.</span><span class="n">Failure</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span>
+<a id="__codelineno-26-37" name="__codelineno-26-37"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">LoginPage</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="s">"Incorrect login or password."</span><span class="p">);</span>
+<a id="__codelineno-26-38" name="__codelineno-26-38"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-26-39" name="__codelineno-26-39"></a><span class="w">        </span><span class="n">limiter</span><span class="p">.</span><span class="n">Success</span><span class="p">(</span><span class="n">ip</span><span class="p">);</span>
+<a id="__codelineno-26-40" name="__codelineno-26-40"></a><span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="n">AuthService</span><span class="p">.</span><span class="n">Cookie</span><span class="p">,</span><span class="w"> </span><span class="n">auth</span><span class="p">.</span><span class="n">CreateToken</span><span class="p">(</span><span class="n">user</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">CookieOptions</span>
+<a id="__codelineno-26-41" name="__codelineno-26-41"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-26-42" name="__codelineno-26-42"></a><span class="w">            </span><span class="n">HttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-26-43" name="__codelineno-26-43"></a><span class="w">            </span><span class="n">SameSite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SameSiteMode</span><span class="p">.</span><span class="n">Lax</span><span class="p">,</span>
+<a id="__codelineno-26-44" name="__codelineno-26-44"></a><span class="w">            </span><span class="n">MaxAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="n">configuration</span><span class="p">.</span><span class="n">GetValue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Jwt:DurationMinutes"</span><span class="p">)),</span>
+<a id="__codelineno-26-45" name="__codelineno-26-45"></a><span class="w">        </span><span class="p">});</span>
+<a id="__codelineno-26-46" name="__codelineno-26-46"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"/profile"</span><span class="p">);</span>
+<a id="__codelineno-26-47" name="__codelineno-26-47"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-48" name="__codelineno-26-48"></a>
+<a id="__codelineno-26-49" name="__codelineno-26-49"></a><span class="w">    </span><span class="na">[HttpPost("logout")]</span>
+<a id="__codelineno-26-50" name="__codelineno-26-50"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Logout</span><span class="p">()</span>
+<a id="__codelineno-26-51" name="__codelineno-26-51"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-26-52" name="__codelineno-26-52"></a><span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Delete</span><span class="p">(</span><span class="n">AuthService</span><span class="p">.</span><span class="n">Cookie</span><span class="p">);</span>
+<a id="__codelineno-26-53" name="__codelineno-26-53"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="s">"/login"</span><span class="p">);</span>
+<a id="__codelineno-26-54" name="__codelineno-26-54"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-55" name="__codelineno-26-55"></a>
+<a id="__codelineno-26-56" name="__codelineno-26-56"></a><span class="w">    </span><span class="c1">// jede Anzeige des Formulars erzeugt ein NEUES CAPTCHA</span>
+<a id="__codelineno-26-57" name="__codelineno-26-57"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ViewResult</span><span class="w"> </span><span class="nf">LoginPage</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">error</span><span class="p">)</span>
+<a id="__codelineno-26-58" name="__codelineno-26-58"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-26-59" name="__codelineno-26-59"></a><span class="w">        </span><span class="n">ViewData</span><span class="p">[</span><span class="s">"Login"</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">login</span><span class="p">;</span>
+<a id="__codelineno-26-60" name="__codelineno-26-60"></a><span class="w">        </span><span class="n">ViewData</span><span class="p">[</span><span class="s">"Error"</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span><span class="p">;</span>
+<a id="__codelineno-26-61" name="__codelineno-26-61"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">"Login"</span><span class="p">,</span><span class="w"> </span><span class="n">captchas</span><span class="p">.</span><span class="n">Generate</span><span class="p">());</span>
+<a id="__codelineno-26-62" name="__codelineno-26-62"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-63" name="__codelineno-26-63"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeile 19: die IP-Adresse des Clients, die von der Netzwerkverbindung geliefert wird;</li>
+<li>Zeilen 22–25: Eine gesperrte Adresse wird gar nicht erst angehört;</li>
+<li>Zeilen 28–31: Zuerst wird das CAPTCHA überprüft, dann das Passwort (eine rechenintensive <em>[bcrypt]</em>-Operation), und zwar nur, wenn das CAPTCHA korrekt ist. Ein falsches CAPTCHA zählt als Fehlversuch;</li>
+<li>Zeilen 57–61: Bei jeder Anzeige des Formulars wird ein neues CAPTCHA erzeugt, das zum Modell der View wird.</li>
+</ul>
+<p>Die Datei <strong><em>[Views/Auth/Login.cshtml]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-27-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-27-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-27-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-27-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-27-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-27-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-27-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-27-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-27-10">10</a></span>
+<span class="normal"><a href="#__codelineno-27-11">11</a></span>
+<span class="normal"><a href="#__codelineno-27-12">12</a></span>
+<span class="normal"><a href="#__codelineno-27-13">13</a></span>
+<span class="normal"><a href="#__codelineno-27-14">14</a></span>
+<span class="normal"><a href="#__codelineno-27-15">15</a></span>
+<span class="normal"><a href="#__codelineno-27-16">16</a></span>
+<span class="normal"><a href="#__codelineno-27-17">17</a></span>
+<span class="normal"><a href="#__codelineno-27-18">18</a></span>
+<span class="normal"><a href="#__codelineno-27-19">19</a></span>
+<span class="normal"><a href="#__codelineno-27-20">20</a></span>
+<span class="normal"><a href="#__codelineno-27-21">21</a></span>
+<span class="normal"><a href="#__codelineno-27-22">22</a></span>
+<span class="normal"><a href="#__codelineno-27-23">23</a></span>
+<span class="normal"><a href="#__codelineno-27-24">24</a></span>
+<span class="normal"><a href="#__codelineno-27-25">25</a></span>
+<span class="normal"><a href="#__codelineno-27-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>@model Captcha
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"h3"</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span> <span class="na">action</span><span class="o">=</span><span class="s">"/login"</span><span class="p">&gt;</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-2"</span><span class="p">&gt;</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5"></a>    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-label"</span> <span class="na">for</span><span class="o">=</span><span class="s">"login"</span><span class="p">&gt;</span>Login<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-control"</span> <span class="na">id</span><span class="o">=</span><span class="s">"login"</span> <span class="na">name</span><span class="o">=</span><span class="s">"login"</span> <span class="na">value</span><span class="o">=</span><span class="s">"@ViewData["</span><span class="na">Login</span><span class="err">"]"</span> <span class="na">required</span><span class="p">&gt;</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-2"</span><span class="p">&gt;</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9"></a>    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-label"</span> <span class="na">for</span><span class="o">=</span><span class="s">"password"</span><span class="p">&gt;</span>Password<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-control"</span> <span class="na">type</span><span class="o">=</span><span class="s">"password"</span> <span class="na">id</span><span class="o">=</span><span class="s">"password"</span> <span class="na">name</span><span class="o">=</span><span class="s">"password"</span> <span class="na">required</span><span class="p">&gt;</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-3"</span><span class="p">&gt;</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13"></a>    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-label"</span> <span class="na">for</span><span class="o">=</span><span class="s">"captcha"</span><span class="p">&gt;</span>Copy the code of the image<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14"></a>    @* das vom Server erzeugte SVG-Bild: ohne Maskierung eingefügt *@
+<a id="__codelineno-27-15" name="__codelineno-27-15"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"mb-1"</span><span class="p">&gt;</span>@Html.Raw(Model.Svg)<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16"></a>    @* die Captcha-Kennung reist in einem versteckten Feld; die Antwort bleibt auf dem Server *@
+<a id="__codelineno-27-17" name="__codelineno-27-17"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"hidden"</span> <span class="na">name</span><span class="o">=</span><span class="s">"captchaId"</span> <span class="na">value</span><span class="o">=</span><span class="s">"@Model.Id"</span><span class="p">&gt;</span>
+<a id="__codelineno-27-18" name="__codelineno-27-18"></a>    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-control"</span> <span class="na">id</span><span class="o">=</span><span class="s">"captcha"</span> <span class="na">name</span><span class="o">=</span><span class="s">"captcha"</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">"off"</span> <span class="na">required</span><span class="p">&gt;</span>
+<a id="__codelineno-27-19" name="__codelineno-27-19"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-27-20" name="__codelineno-27-20"></a>  <span class="p">&lt;</span><span class="nt">button</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span><span class="p">&gt;</span>Log in<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a id="__codelineno-27-21" name="__codelineno-27-21"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a id="__codelineno-27-22" name="__codelineno-27-22"></a>@if (ViewData["Error"] is string error)
+<a id="__codelineno-27-23" name="__codelineno-27-23"></a>{
+<a id="__codelineno-27-24" name="__codelineno-27-24"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"alert alert-danger mt-3"</span><span class="p">&gt;</span>@error<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-27-25" name="__codelineno-27-25"></a>}
+<a id="__codelineno-27-26" name="__codelineno-27-26"></a><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-muted small mt-3"</span><span class="p">&gt;</span>Test accounts (password = login): marie (USER), admin (ADMIN).<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 15: Das SVG-Bild ist Text (XML): Es wird unverändert in die Seite eingefügt. <strong><em>[Html.Raw]</em></strong> ist hier zulässig: Es handelt sich um vom Server erzeugtes HTML, nicht um Benutzereingaben;</li>
+<li>Zeile 17: Die CAPTCHA-Kennung wird in einem versteckten Feld übergeben; die Antwort bleibt dagegen auf dem Server.</li>
+</ul>
+<p>Die Anmeldeseite unter der URL<a href="http://localhost:5000/login"><u><span style="color: #0563c1"> http://localhost:5000/login</span></u></a>:</p>
+<p><img src="images/10000000000002BE000001F2A0CFB057.png" width="428" height="304" style="width:11.322cm;height:8.033cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000001F2A0CFB057.png" /></p>
+<p>Ein falsch eingegebenes CAPTCHA:</p>
+<p><img src="images/10000000000002BE0000023C8AD0321F.png" width="428" height="349" style="width:11.322cm;height:9.225cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000023C8AD0321F.png" /></p>
+<p>Nach drei fehlgeschlagenen Versuchen wird selbst das richtige Passwort eine Minute lang abgelehnt:</p>
+<p><img src="images/10000000000002BE0000023C0A23C3DA.png" width="428" height="349" style="width:11.322cm;height:9.225cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE0000023C0A23C3DA.png" /></p>
+<p>Die Fallstudie wendet diese beiden Sicherheitsmaßnahmen auf ihre Anmeldeseite und auf die Kontoerstellung an, mit anpassbaren Schwellenwerten in der Datei <strong><em>[appsettings.json]</em></strong> (Abschnitt <strong><em>[Protection]</em></strong>).</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

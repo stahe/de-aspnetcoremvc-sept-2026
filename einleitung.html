@@ -1,0 +1,1081 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-aspnetcoremvc-sept-2026/einleitung.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="controller-actions-routing.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Einleitung - Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-einleitung" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Einleitung
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einleitung
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="einleitung.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einleitung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-die-rolle-von-aspnet-core-mvc-in-einer-webanwendung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1. Die Rolle von ASP.NET Core MVC in einer Webanwendung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-verwendete-werkzeuge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2. Verwendete Werkzeuge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-die-fallstudie-ausfuhren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3. Die Fallstudie ausführen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-beispiele" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4. Beispiele
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-inhalt-des-dokuments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5. Inhalt des Dokuments
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="das-action-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-einleitung">1. <span style="color: #2e74b5">Einleitung</span></h1>
+<p>Das PDF des Dokuments finden Sie |<a href="https://1drv.ms/b/c/f53a919f43d27eb5/IQDcApxEhi6cSZU5XeZbCz5vAbwTUuzLGeOTkQkIVp7X2JE?e=hbu7cg">HIER</a>|.</p>
+<p>Den Code des Dokuments finden Sie |<a href="https://1drv.ms/u/c/f53a919f43d27eb5/IQDHsUdbl0pXTLDIlc2W9M1wAeKn1Qjr6JqIAT4KzPShM2w?e=L7gahH">HIER</a>|.</p>
+<p>Dieses Dokument ist ein Produkt der KI Claude von Anthropic. Es knüpft an das Dokument <a href="https://stahe.github.io/de-nestjs-html-sept-2026/"><u><span style="color: #0563c1">„Schritt-für-Schritt-Einführung in das Web-Framework [NestJS]“</span></u></a> (2026) an, das seinerseits das Dokument <a href="https://stahe.github.io/de-aspnetmvc-nov-2013/"><u><span style="color: #0563c1">„Einführung in ASP.NET MVC anhand von Beispielen“</span></u></a> (2013) an das Framework <em>[NestJS]</em> angepasst hat. Dieses Dokument geht den umgekehrten Weg und kehrt zur Plattform <em>[.NET]</em> in ihrer aktuellen Version zurück:</p>
+<ul>
+<li>das Framework <em>[NestJS]</em> und die Sprache <em>[TypeScript]</em> werden durch das Framework <em>[ASP.NET Core MVC]</em> und die Sprache <em>[C#]</em> ersetzt;</li>
+<li>die <em>[Handlebars]</em>-Views werden durch <em>[Razor]</em>-Views ersetzt;</li>
+<li>ORM und <em>[TypeORM]</em> werden durch ORM und <em>[Entity Framework Core]</em> ersetzt, weiterhin auf Basis von <em>[MySQL]</em>.</li>
+</ul>
+<p>Das Dokument folgt eng dem Aufbau des Kurses zu <em>[NestJS]</em>: zunächst zahlreiche kleine Projekte, die jeweils ein einzelnes Konzept behandeln, danach eine umfassende Fallstudie – eine Webanwendung zur Terminplanung für eine Arztpraxis – mit vollständig kommentierten Dateien. Die Beispiele tragen dieselben Nummern und behandeln dieselben Themen wie im Kurs zu <em>[NestJS]</em>: Wer diesen Kurs kennt, kann die beiden Frameworks Beispiel für Beispiel vergleichen. Das ist jedoch nicht nötig: Dieses Dokument ist in sich abgeschlossen und setzt keine Vorkenntnisse in <em>[NestJS]</em> und auch nicht in <em>[ASP.NET]</em> voraus. Die einzigen Voraussetzungen sind Grundkenntnisse der Webprogrammierung (das HTTP-Protokoll, die Sprache HTML) und die Sprache <em>[C#]</em>.</p>
+<h2 id="11-die-rolle-von-aspnet-core-mvc-in-einer-webanwendung">1.1. <span style="color: #2e74b5">Die Rolle von ASP.NET Core MVC in einer Webanwendung</span></h2>
+<p>Eine Webanwendung ist oft in Schichten aufgebaut, wobei jede Schicht nur mit ihren Nachbarschichten kommuniziert:</p>
+<p><img src="images/10000000000003D40000014A0149759D.png" width="597" height="201" style="width:15.806cm;height:5.323cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000003D40000014A0149759D.png" /></p>
+<ul>
+<li>Die Web-Schicht empfängt HTTP-Anfragen vom Browser und liefert ihm HTML-Seiten zurück. Bei dieser Schicht hilft uns <em>[ASP.NET Core MVC]</em> beim Schreiben;</li>
+<li>Die Geschäftsschicht enthält die Geschäftsregeln der Anwendung (zum Beispiel „ein Patient kann nur einen bevorstehenden Termin haben“). Sie weiß nichts vom Web: Sie könnte genauso gut eine Kommandozeilenanwendung bedienen;</li>
+<li>Die Datenzugriffsschicht (DAO-Schicht, <em>[DAO]</em> für <em>[Data Access Object]</em>) liest aus der Datenbank und schreibt in sie. Wir verwenden den ORM <em>[Entity Framework Core]</em> (<em>[Object Relational Mapper]</em>), der die Zeilen der Tabellen auf Objekte in <em>[C#]</em> abbildet.</li>
+</ul>
+<p>Die Web-Schicht selbst folgt dem Modell <em>[MVC]</em> (<em>[Model – View – Controller]</em>):</p>
+<ul>
+<li>Der Controller (C) ist eine Klasse, deren Methoden – <strong>Actions</strong> genannt – jeweils einen bestimmten Anfragetyp bearbeiten (zum Beispiel <strong><em>[GET /schedule]</em></strong>). Eine Action liest die Anfrageparameter, ruft die Geschäftsschicht auf und wählt anschließend die anzuzeigende View aus;</li>
+<li>Das Modell (M) ist die Menge der Daten, die die Action an die View übergibt: ein <em>[C#]</em>-Objekt;</li>
+<li>Die View (V) ist eine <em>[Razor]</em>-Datei (Erweiterung <strong><em>[.cshtml]</em></strong>): ausgehend von HTML, in dem <em>[C#]</em>-Ausdrücke – eingeleitet durch das Zeichen <strong><em>[@]</em></strong> – durch Daten aus dem Modell ersetzt werden.</li>
+</ul>
+<p>Die Verarbeitung einer Anfrage folgt den nummerierten Schritten im Diagramm:</p>
+<ul>
+<li>1: Der Browser sendet eine HTTP-Anfrage, zum Beispiel <strong><em>[GET /schedule?doctorId=1&amp;day=2026-09-24]</em></strong>;</li>
+<li>2: Der Webserver <em>[Kestrel]</em>, in <em>[ASP.NET Core]</em> integriert, empfängt die Anfrage. Sie durchläuft eine Reihe von <strong>Middleware-Komponenten</strong> (Lesen von Cookies, Authentifizierung, statische Dateien usw.), anschließend wählt <em>[ASP.NET Core]</em> die Action aus, die für diese Anfrage zuständig ist: Das ist das <strong>Routing</strong>. Bevor die Anfrage die Action erreicht, kann sie noch <strong>Filter</strong> durchlaufen, die wir in späteren Kapiteln untersuchen;</li>
+<li>3: Die Action fordert die benötigten Daten von der Geschäftsschicht an;</li>
+<li>4: Sie erstellt das Modell der View und bestimmt die View, die es anzeigen soll;</li>
+<li>5: Die <em>[Razor]</em>-View-Engine erzeugt die HTML-Seite, die <em>[ASP.NET Core]</em> an den Browser zurückgibt.</li>
+</ul>
+<p><em>[ASP.NET Core]</em> ist das Web-Framework der Plattform <em>[.NET]</em> von Microsoft. Es ist kostenlos und quelloffen und läuft unter <em>[Windows]</em>, <em>[Linux]</em> und <em>[macOS]</em>. Es kann Server erstellen, die JSON an einen <em>[JavaScript]</em>-Client (<em>[Angular]</em>, <em>[React]</em>, <em>[Flutter]</em> ...) liefern, ebenso wie klassische Webanwendungen, bei denen der Server die HTML-Seiten erzeugt und der Browser sie lediglich anzeigt. Dieser zweite Anwendungsfall – der <strong>MVC</strong>-Teil des Frameworks – wird in diesem Dokument behandelt. Wie <em>[NestJS]</em>, das sich stark daran orientiert hat, beruht <em>[ASP.NET Core]</em> auf zwei Ideen: <strong>Attribute</strong> (<strong><em>[[HttpGet]]</em></strong>, <strong><em>[[Route]]</em></strong>, [[Authorize]] ...) beschreiben die Aufgaben von Klassen und Methoden, und <strong>Dependency Injection</strong> versorgt jedes Objekt mit den Abhängigkeiten, die es benötigt.</p>
+<h2 id="12-verwendete-werkzeuge">1.2. <span style="color: #2e74b5">Verwendete Werkzeuge</span></h2>
+<p>Die Beispiele wurden mit den folgenden Werkzeugen geschrieben und getestet (ihre Installation wird im Anhang beschrieben):</p>
+<ul>
+<li>das <em>[.NET]</em>-10-SDK (<em>[Software Development Kit]</em>), das den <em>[C#]</em>-Compiler, das Framework <em>[ASP.NET Core]</em> und das Kommandozeilenwerkzeug <strong><em>[dotnet]</em></strong> enthält. <em>[.NET]</em> 10 ist die aktuelle LTS-Version (Long-Term Support);</li>
+<li>der Editor <em>[Visual Studio Code]</em> mit der Erweiterung <em>[C# Dev Kit]</em>;</li>
+<li>ein aktueller Browser (<em>[Chrome]</em>, <em>[Firefox]</em>, <em>[Edge]</em>);</li>
+<li>das Kommandozeilenwerkzeug <em>[curl]</em>, das die rohen HTTP-Antworten anzeigt (es ist in <em>[Windows]</em> 10 und 11 enthalten);</li>
+<li>das DBMS <em>[MySQL]</em> (oder <em>[MariaDB]</em>), zum Beispiel das von <em>[Laragon]</em> unter <em>[Windows]</em>, ab dem Kapitel zum Datenzugriff und für die Fallstudie.</li>
+</ul>
+<p>Das Framework <em>[ASP.NET Core]</em> ist Teil des SDK: Die Beispiele benötigen bis Kapitel 8 keine zusätzlichen Bibliotheken. Die Beispiele 25 bis 28 und die Fallstudie verwenden drei Bibliotheken, die bei der ersten Kompilierung automatisch von der Website <em>[nuget.org]</em> heruntergeladen werden (Sie müssen an diesem Tag also mit dem Internet verbunden sein): <em>[Microsoft.AspNetCore.Authentication.JwtBearer]</em> (JWT-Token), <em>[BCrypt.Net-Next]</em> (Passwort-Hashes) und <em>[Pomelo.EntityFrameworkCore.MySql]</em> (<em>[Entity Framework Core]</em> für <em>[MySQL]</em>).</p>
+<h2 id="13-die-fallstudie-ausfuhren">1.3. <span style="color: #2e74b5">Die Fallstudie ausführen</span></h2>
+<p><strong>Anmerkung des Rezensenten</strong>: Ich rate dem Leser, die Fallstudie sofort wie unten beschrieben durchzuführen. Sobald Sie die Rolle dieser Terminplanungsanwendung vollständig verstanden haben, bitten Sie Ihre bevorzugte KI, die Anwendung wie folgt zu ändern: Ab sofort kann jeder Arzt:</p>
+<ul>
+<li>seine eigenen Terminslots zwischen zwei Daten festlegen. So kann er seinen Terminkalender nach Bedarf anpassen;</li>
+<li>bestimmte Zeitslots für einen bestimmten Tag aus dem Kalender entfernen – zum Beispiel, wenn er aus persönlichen Gründen nicht verfügbar ist;</li>
+</ul>
+<p>Die Änderung ist nicht trivial, da sie eine Änderung der Datenbankstruktur erfordert. Bitten Sie die KI, Ihnen den neuen Anwendungscode und das SQL-Skript zur Erstellung der neuen Datenbank zu liefern. Dazu müssen Sie ihr die ZIP-Datei mit dem vollständigen Projekt sowie das SQL-Skript der alten Datenbank zur Verfügung stellen.</p>
+<p>Außerdem habe ich den von <strong>Claude</strong> erstellten Kurs nicht durchgesehen. Er hatte bereits einen perfekten [NestJS]-Kurs erstellt. Ich bin davon ausgegangen, dass das auch hier der Fall ist. Wenn Sie etwas nicht verstehen, ist die Lösung immer dieselbe: Bitten Sie Ihre bevorzugte KI, Ihnen zu erklären, was Sie nicht verstehen. <strong>Claude</strong> zum Beispiel ist darin sehr gut. Möglicherweise müssen Sie ihm das Beispiel, das Sie nicht verstehen, „hochladen“.</p>
+<p><strong>Ende der Anmerkung</strong>.</p>
+<p>Die Fallstudie am Ende dieses Dokuments ist eine vollständige Anwendung. Leser werden sie vermutlich in Aktion sehen wollen, bevor sie sich in die Details des Frameworks vertiefen: Hier steht, wie Sie sie ausführen. Sie befindet sich im Ordner <strong><em>[rdvmedecins2-aspnetcore-mvc]</em></strong>, neben dem Ordner <strong><em>[examples]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>aspnetcore-mvc-sept-2026/
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>├── examples/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>└── rdvmedecins2-aspnetcore-mvc/
+</code></pre></div></td></tr></table></div>
+<p>Sie müssen das SDK <em>[.NET]</em> 10, <em>[Visual Studio Code]</em> und <em>[MySQL]</em> installiert haben (siehe Anhänge). Dann:</p>
+<ul>
+<li><strong>Erstellen Sie die Datenbank</strong> <strong><em>[dbrdvmedecins2]</em></strong> <strong>,</strong> indem Sie das Skript <strong><em>[rdvmedecins2-aspnetcore-mvc/database/dbrdvmedecins2.sql]</em></strong> ausführen. Öffnen Sie mit <em>[Laragon]</em> das Werkzeug <em>[HeidiSQL]</em> (Schaltfläche „Datenbank“) und führen Sie das Skript dann über das Menü „Datei / SQL ausführen“ aus. In der Kommandozeile:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>mysql -u root &lt; database/dbrdvmedecins2.sql
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Prüfen Sie die Datenbankverbindung</strong>. Die Anwendung verbindet sich mit <em>[MySQL]</em> auf <strong><em>[localhost]</em></strong>, Port 3306, mit dem Benutzer <strong><em>[root]</em></strong> <strong>ohne Passwort</strong>  (den Standardeinstellungen von <em>[Laragon]</em>). Wenn Ihr Konto <strong><em>[root]</em></strong> ein Passwort hat, tragen Sie es in der Datei <strong><em>[appsettings.json]</em></strong> der Anwendung am Ende der Verbindungszeichenfolge <strong><em>[ConnectionStrings:RdvMedecins]</em></strong> ein (<strong><em>[...;User=root;Password=myPassword;]</em></strong>). Geben Sie bei <em>[MariaDB]</em> außerdem deren Version im Schlüssel <strong><em>[MySql:ServerVersion]</em></strong> an (zum Beispiel <strong><em>[10.11.0-mariadb]</em></strong>);</li>
+<li><strong>Öffnen Sie den Ordner</strong> <strong><em>[rdvmedecins2-aspnetcore-mvc]</em></strong>  in <em>[Visual Studio Code]</em> (Menü „Datei / Ordner öffnen“) und öffnen Sie dann ein Terminal (Menü „Terminal / Neues Terminal“);</li>
+<li><strong>Starten Sie die Anwendung</strong>:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>dotnet run
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Bei der ersten Ausführung lädt <strong><em>[dotnet]</em></strong> die Bibliotheken von <em>[nuget.org]</em> herunter, kompiliert die Anwendung und startet sie anschließend. Die Konsole zeigt dann die Adresse der Anwendung an:</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>Using launch settings from Properties/launchSettings.json...
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>Building...
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>info: Microsoft.Hosting.Lifetime[14]
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>      Now listening on: http://localhost:8081
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>info: Microsoft.Hosting.Lifetime[0]
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>      Application started. Press Ctrl+C to shut down.
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>info: Microsoft.Hosting.Lifetime[0]
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>      Hosting environment: Development
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>info: Microsoft.Hosting.Lifetime[0]
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>      Content root path: C:\course\rdvmedecins2-aspnetcore-mvc
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Öffnen Sie die Adresse</strong> <strong><em>[http://localhost:8081]</em></strong> in einem Browser:</li>
+</ul>
+<p><img src="images/10000000000003EA000003B4967ABD79.png" width="605" height="572" style="width:16cm;height:15.138cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000003EA000003B4967ABD79.png" /></p>
+<ul>
+<li>Melden Sie sich mit einem der Demokonten an, deren Passwort mit dem Benutzernamen identisch ist: <strong><em>[admin]</em></strong>  (Administrator), <strong><em>[pelissier]</em></strong>, <strong><em>[tatou]</em></strong>, <strong><em>[dupont]</em></strong>  (Ärzte), <strong><em>[martin]</em></strong>, <strong><em>[durand]</em></strong>, <strong><em>[bistrou]</em></strong>, <strong><em>[german]</em></strong>  (Patienten). Außerdem müssen Sie die Zeichen aus dem Bild eingeben, in Groß- oder Kleinschreibung.</li>
+</ul>
+<p>Wenn sich die Anwendung sofort mit der Meldung <strong><em>[Unable to connect to any of the specified MySQL hosts]</em></strong> beendet, bedeutet das, dass <em>[MySQL]</em> nicht gestartet wurde; bei <strong><em>[Access denied for user &#x27;root&#x27;@&#x27;localhost&#x27;]</em></strong> ist das Passwort in der Verbindungszeichenfolge falsch; bei <strong><em>[Unknown database &#x27;dbrdvmedecins2&#x27;]</em></strong> wurde das SQL-Skript nicht ausgeführt. Die Datei <strong><em>[README.md]</em></strong> der Anwendung beschreibt weitere Szenarien. Die Anwendung wird mit <strong><em>[Ctrl-C]</em></strong> im Terminal beendet.</p>
+<p>Das letzte Kapitel des Dokuments erklärt, wie die Anwendung benutzt wird, und behandelt dann jede ihrer Dateien.</p>
+<h2 id="14-beispiele">1.4. <span style="color: #2e74b5">Beispiele</span></h2>
+<p>Die Beispiele liegen im Ordner <strong><em>[examples]</em></strong>, mit einem Unterordner pro Beispiel:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span>
+<span class="normal"><a href="#__codelineno-4-8">8</a></span>
+<span class="normal"><a href="#__codelineno-4-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>examples/
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>├── 01-structure/
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>├── 02-routing/
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>├── ...
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>├── 28-layers/
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>├── common/
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>│   └── bootstrap/
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>├── Directory.Build.props
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>└── examples.slnx
+</code></pre></div></td></tr></table></div>
+<p>Jedes Beispiel ist ein eigenständiges <em>[.NET]</em><strong>-Projekt,</strong> das für sich kompiliert und ausgeführt werden kann. Die Datei <strong><em>[examples.slnx]</em></strong> ist eine <strong>Projektmappe</strong>: eine Liste aller dieser Projekte. Wenn Sie den Ordner <strong><em>[examples]</em></strong> in <em>[Visual Studio Code]</em> öffnen, findet die Erweiterung <em>[C# Dev Kit]</em> die Projektmappe und lädt alle Projekte (Bereich „Projektmappen-Explorer“): Sie haben dann in jeder Datei Syntaxhervorhebung, Codevervollständigung und Fehlermeldungen zur Verfügung.</p>
+<p>Der Ordner <strong><em>[common/bootstrap]</em></strong> enthält das CSS und die <em>[Bootstrap]</em>-Frameworks, die von den Beispielen gemeinsam genutzt werden, die ihre Seiten formatieren (ab Beispiel 15).</p>
+<p>Jedes Beispiel hat die Struktur eines <em>[ASP.NET Core MVC]</em>-Projekts:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>13-first-view/
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>├── Controllers/
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>│   └── ViewsController.cs
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>├── Models/
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>│   └── PageModel.cs
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>├── Views/
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>│   ├── Views/
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>│   │   ├── Index.cshtml
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>│   │   └── Unknown.cshtml
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>│   └── _ViewImports.cshtml
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>├── appsettings.json
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>├── Example13.csproj
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>└── Program.cs
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong><em>[Program.cs]</em></strong>: der Einstiegspunkt der Anwendung – Konfiguration, Services und Serverstart;</li>
+<li><strong><em>[Controllers]</em></strong>: die Controller;</li>
+<li><strong><em>[Models]</em></strong>: die Klassen, die die Modelle beschreiben (Actions und Views);</li>
+<li><strong><em>[Views]</em></strong>: die <em>[Razor]</em>-Views (ab Kapitel 4);</li>
+<li><strong><em>[appsettings.json]</em></strong>: die Konfiguration der Anwendung (Protokollierungsstufen und später die Datenbankverbindung usw.);</li>
+<li><strong><em>[Example13.csproj]</em></strong>: die Projektdatei, die beschreibt, wie die Anwendung kompiliert wird.</li>
+</ul>
+<p>Um ein Beispiel auszuführen, öffnen Sie ein Terminal in seinem Ordner (in <em>[Visual Studio Code]</em>: Rechtsklick auf den Beispielordner, dann „In integriertem Terminal öffnen“ auswählen) und geben Sie ein:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>dotnet run
+</code></pre></div></td></tr></table></div>
+<p><strong><em>[dotnet run]</em></strong> kompiliert das Projekt (in dessen Ordner <strong><em>[bin]</em></strong>) und führt die Anwendung dann aus. Mit <strong><em>[dotnet watch]</em></strong> wird der Code neu kompiliert und die Anwendung neu gestartet, sobald eine Datei vom Typ <strong><em>[.cs]</em></strong> oder <strong><em>[.cshtml]</em></strong> geändert wird:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>dotnet watch
+</code></pre></div></td></tr></table></div>
+<p>Alle Beispiele lauschen auf Port 5000, dem Standardport von <em>[ASP.NET Core]</em>: Es kann also immer nur eines laufen. Beenden Sie den Server mit <strong><em>[Ctrl-C]</em></strong> im Terminal. Sie können auch alle Beispiele auf einmal aus dem Ordner <strong><em>[examples]</em></strong> heraus kompilieren, um zu prüfen, ob die Installation vollständig ist:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>dotnet build examples.slnx
+</code></pre></div></td></tr></table></div>
+<p>Die Projektdatei eines Beispiels besteht nur aus einer einzigen Zeile. Zum Beispiel <strong><em>[01-structure/Example01.csproj]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nt">&lt;Project</span><span class="w"> </span><span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk.Web"</span><span class="nt">&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nt">&lt;/Project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 1: <strong><em>[Microsoft.NET.Sdk.Web]</em></strong> ist das SDK für Webanwendungen. Es stellt allein das gesamte Framework <em>[ASP.NET Core]</em> bereit: Controller, Views, Konfiguration, Webserver ...</li>
+</ul>
+<p>Die Einstellungen, die allen Beispielen gemeinsam sind, werden nur einmal in der Datei <strong><em>[examples/Directory.Build.props]</em></strong> geschrieben, die der Compiler automatisch für jedes Projekt im Ordner <strong><em>[examples]</em></strong> liest:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="cm">&lt;!--</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="cm">  Directory.Build.props: wird automatisch von ALLEN Projekten unterhalb</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="cm">  dieses Ordners gelesen. Die von den Beispielen gemeinsam genutzten Einstellungen stehen daher</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="cm">  nur einmal hier, statt in jeder .csproj-Datei wiederholt zu werden.</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="cm">--&gt;</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="nt">&lt;Project&gt;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">  </span><span class="nt">&lt;PropertyGroup&gt;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">    </span><span class="cm">&lt;!-- .NET 10, LTS-Version (Long-Term Support) --&gt;</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">    </span><span class="nt">&lt;TargetFramework&gt;</span>net10.0<span class="nt">&lt;/TargetFramework&gt;</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">    </span><span class="cm">&lt;!-- der Compiler meldet die Risiken einer NullReferenceException --&gt;</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">    </span><span class="nt">&lt;Nullable&gt;</span>enable<span class="nt">&lt;/Nullable&gt;</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">    </span><span class="cm">&lt;!-- implizite Usings: System, System.Linq, System.Threading.Tasks... --&gt;</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">    </span><span class="nt">&lt;ImplicitUsings&gt;</span>enable<span class="nt">&lt;/ImplicitUsings&gt;</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">  </span><span class="nt">&lt;/PropertyGroup&gt;</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="nt">&lt;/Project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diese Datei durch:</p>
+<ul>
+<li>Zeile 9: die Zielversion von <em>[.NET]</em>: <em>[.NET]</em> 10;</li>
+<li>Zeile 11: „nullable“ Referenztypen. Der Compiler unterscheidet eine Variable vom Typ <strong><em>[string]</em></strong>, der niemals der Wert <strong><em>[null]</em></strong> zugewiesen werden darf, von einer Variablen vom Typ <strong><em>[string?]</em></strong>, die auf diesen Wert gesetzt werden kann, und gibt bei jedem möglichen Fehler im Zusammenhang mit <strong><em>[NullReferenceException]</em></strong> eine Warnung aus;</li>
+<li>Zeile 13: Die gebräuchlichsten Namespaces (<strong><em>[System]</em></strong>, <strong><em>[System.Linq]</em></strong>, <strong><em>[System.Threading.Tasks]</em></strong>, [Microsoft.AspNetCore.Builder] ...) werden automatisch in jede Datei importiert: Die entsprechenden <strong><em>[using]</em></strong>-Direktiven müssen nicht geschrieben werden.</li>
+</ul>
+<p>Schließlich ist die Datei <strong><em>[appsettings.json]</em></strong> bis Kapitel 8 für alle Beispiele dieselbe:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span>
+<span class="normal"><a href="#__codelineno-11-8">8</a></span>
+<span class="normal"><a href="#__codelineno-11-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">  </span><span class="nt">"Logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="nt">"LogLevel"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">      </span><span class="nt">"Default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Information"</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">      </span><span class="nt">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning"</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">  </span><span class="nt">"AllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*"</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeilen 4–5: Protokollierungsstufen. Meldungen der Anwendung werden ab der Stufe <strong><em>[Information]</em></strong> angezeigt; die <em>von [ASP.NET Core]</em> selbst – die sehr zahlreich sind – werden erst ab der Stufe <strong><em>[Warning]</em></strong> angezeigt. Die Konsole zeigt also Startmeldungen und Fehler an, aber nicht die Details jeder Anfrage;</li>
+<li>Zeile 8: die in Anfragen akzeptierten Domänennamen (<strong><em>[*]</em></strong>: alle).</li>
+</ul>
+<h2 id="15-inhalt-des-dokuments">1.5. <span style="color: #2e74b5">Inhalt des Dokuments</span></h2>
+<p>Das Dokument ist wie folgt aufgebaut:</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Kapitel</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Inhalt</b></div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0"><b>Beispiele</b></div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Controller, Actions,</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Vom Browser zur Action: Routen, Antworten, Weiterleitungen, Services</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">01 bis 06</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Das Action-Modell</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Anfrageparameter: Binding, Konvertierung, Validierung, POST-Formulare</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">07 bis 12</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Die View und ihr Modell</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Razor, Template, Partial Views, Helper, Formulare, Validierung, PRG</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">13 bis 21</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Internationalisierung</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Eine Anwendung auf Französisch und Englisch</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">22</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Datenbereiche</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Anwendung, Anfrage, Client</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">23</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Der Lebenszyklus einer Anfrage</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Middleware, Autorisierungsfilter, Action-Filter, Exception-Filter, Model Binding</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">24</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Authentifizierung und Autorisierung</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">JWT in einem Cookie, Rollen, CAPTCHA, Versuchsbegrenzung</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">25–27</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Geschichtete Architektur</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Web / Geschäftslogik / DAO mit Entity Framework Core und MySQL</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">28</div></td></tr><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Fallstudie</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">Die Anwendung RdvMedecins, Datei für Datei erklärt</div></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top; text-align: left;"><div style="margin:0 0 0.5em 0">-</div></td></tr></table>
+
+<p>Jedes Beispiel führt nur wenige neue Konzepte ein, und die Kapitel bauen aufeinander auf: Am besten lesen Sie sie der Reihe nach. Die Fallstudie greift dagegen auf <strong>alle</strong> Konzepte der vorangegangenen Kapitel zurück: Wo es sinnvoll ist, verweist ihr Kommentar auf das Beispiel, in dem das Konzept eingeführt wurde.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2128 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/de-aspnetcoremvc-sept-2026/das-action-modell.html">
+      
+      
+        <link rel="prev" href="controller-actions-routing.html">
+      
+      
+        <link rel="next" href="die-view-und-ihr-modell.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>3. Das Action-Modell - Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+      <link rel="stylesheet" href="stylesheets/bidi.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3-das-action-modell" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-header__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. Das Action-Modell
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum dunklen Modus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum dunklen Modus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Zum hellen Modus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum hellen Modus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" class="md-nav__button md-logo" aria-label="Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Schritt-für-Schritt-Einführung in das Web-Framework [ASP.NET Core MVC]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/de-aspnetcoremvc-sept-2026" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Willkommen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="einleitung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Einleitung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controller-actions-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Controller, Actions, Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="das-action-modell.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Das Action-Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-beispiel-07-url-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1. Beispiel 07: URL-Parameter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-beispiel-08-ein-durch-eine-klasse-beschriebenes-action-modell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2. Beispiel 08: Ein durch eine Klasse beschriebenes Action-Modell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-beispiel-09-von-der-action-durchgefuhrte-validierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3. Beispiel 09: Von der Action durchgeführte Validierung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-beispiel-10-mehrfachparameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4. Beispiel 10: Mehrfachparameter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-beispiel-11-parameter-einer-post-anfrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5. Beispiel 11: Parameter einer POST-Anfrage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-beispiel-12-benutzerdefiniertes-binding-und-benutzerdefinierte-validierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6. Beispiel 12: Benutzerdefiniertes Binding und benutzerdefinierte Validierung
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6. Beispiel 12: Benutzerdefiniertes Binding und benutzerdefinierte Validierung">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#361-ein-model-binder-datefrbinder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.1. Ein Model Binder: DateFrBinder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#362-ein-zweiter-model-binder-languagebinder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.2. Ein zweiter Model Binder: LanguageBinder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#363-ein-validierungsattribut-nospace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.3. Ein Validierungsattribut: [NoSpace]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#364-der-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.4. Der Controller
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#365-fazit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6.5. Fazit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="die-view-und-ihr-modell.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Die View und ihr Modell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internationalisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Internationalisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gultigkeitsbereiche-von-daten.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Gültigkeitsbereiche von Daten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="der-lebenszyklus-einer-anfrage.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Der Lebenszyklus einer Anfrage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="authentifizierung-und-autorisierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Authentifizierung und Autorisierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="schichtenarchitektur-und-datenzugriff.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Schichtenarchitektur und Datenzugriff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="zwischenfazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Zwischenfazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fallstudie-die-anwendung-rdvmedecins.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Fallstudie: Die Anwendung RdvMedecins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fazit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Fazit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="anhange.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Anhänge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="3-das-action-modell">3. <span style="color: #2e74b5">Das Action-Modell</span></h1>
+<p>Eine Action benötigt Informationen, die der Browser sendet: die Parameter der URL (<strong><em>[?name=martin&amp;age=42]</em></strong>), Formularfelder und Routenparameter. Der Quellkurs bezeichnet all diese Informationen <strong>als Action-Modell</strong>. Dieses Kapitel zeigt, wie <em>[ASP.NET Core]</em> diese Informationen an die Action übergibt, in den richtigen Typ konvertiert und validiert. Dieser Vorgang heißt <strong>Model Binding</strong> (<em>[model binding]</em>).</p>
+<h2 id="31-beispiel-07-url-parameter">3.1. <span style="color: #2e74b5">Beispiel 07: URL-Parameter</span></h2>
+<p>Die Datei <strong><em>[Controllers/ParametersController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example07.Controllers</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="na">[Route("parameters")]</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ParametersController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="c1">// /parameters/action01?name=martin: der URL-Parameter [name] -&gt; der Action-Parameter [name]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="na">[HttpGet("action01")]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action01</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"name = [{name}], of type {name?.GetType().Name ?? "</span><span class="k">null</span><span class="s">"}"</span><span class="p">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="c1">// /parameters/action02?age=42: der Wert wird in den Parametertyp KONVERTIERT</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="na">[HttpGet("action02")]</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action02</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"age = [{age}], of type {age.GetType().Name}, ModelState.IsValid = {ModelState.IsValid}"</span><span class="p">;</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="c1">// /parameters/action03?age=42: int? unterscheidet einen fehlenden Parameter (null) von einer Null</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="na">[HttpGet("action03")]</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action03</span><span class="p">(</span><span class="kt">int?</span><span class="w"> </span><span class="n">age</span><span class="p">)</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"age = [{age?.ToString() ?? "</span><span class="k">null</span><span class="s">"}], ModelState.IsValid = {ModelState.IsValid}"</span><span class="p">;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="c1">// /parameters/action04?page=2: ein Standardwert, falls der Parameter fehlt</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="na">[HttpGet("action04")]</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action04</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"page = [{page}]"</span><span class="p">;</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">    </span><span class="c1">// /parameters/action05?q=nest: [FromQuery(Name = ...)], wenn die Namen verschieden sind</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="w">    </span><span class="na">[HttpGet("action05")]</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action05</span><span class="p">([</span><span class="n">FromQuery</span><span class="p">(</span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"q"</span><span class="p">)]</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">search</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"search = [{search}]"</span><span class="p">;</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a><span class="w">    </span><span class="c1">// /parameters/action06?name=martin&amp;age=42: alle Parameter auf einmal</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="w">    </span><span class="na">[HttpGet("action06")]</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Action06</span><span class="p">()</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">Query</span><span class="p">.</span><span class="n">ToDictionary</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code durch:</p>
+<ul>
+<li>Zeilen 10–12: Das Model Binding ordnet die Parameter der Action den Daten der Anfrage <strong>nach Namen</strong> zu: Der Parameter <strong><em>[name]</em></strong> der Action erhält den Wert des Parameters <strong><em>[name]</em></strong> aus der URL (dem Teil nach dem <strong><em>[?]</em></strong>, der Query-String oder <em>[query string]</em> genannt wird). Der Typ <strong><em>[string?]</em></strong> zeigt an, dass der Wert fehlen kann; in diesem Fall ist er <strong><em>[null]</em></strong>. <strong><em>[name?.GetType().Name ?? &quot;null&quot;]</em></strong>: der Name des Werttyps oder die Zeichenkette <strong><em>[&quot;null&quot;]</em></strong> , wenn der Wert <strong><em>[null]</em></strong>  ist (der Operator <strong><em>[??]</em></strong> liefert einen Ersatzwert);</li>
+<li>Zeilen 17–19: Der Parameter ist als Typ <strong><em>[int]</em></strong> deklariert: Das Model Binding <strong>konvertiert</strong> die empfangene Zeichenkette (<strong><em>[&quot;42&quot;]</em></strong>) in eine Zahl. Schlägt die Konvertierung fehl (<strong><em>[?age=abc]</em></strong>), wird die Action dennoch mit dem Standardwert des Typs ausgeführt (0 für einen <strong><em>[int]</em></strong>), und der Fehler wird in <strong><em>[ModelState]</em></strong> festgehalten; der Status des Model Bindings – <strong><em>[ModelState.IsValid] –</em></strong> wird dann zu <strong><em>[false]</em></strong>;</li>
+<li>Zeilen 24–26: Beim Typ <strong><em>[int?]</em></strong>  (einer „nullable“ ganzen Zahl) wird ein fehlender Parameter als <strong><em>[null]</em></strong> dargestellt, nicht als 0: So lässt sich „kein Alter“ von „Alter 0“ unterscheiden;</li>
+<li>Zeilen 31–33: Ein <em>[C#]</em> -Standardwert ersetzt einen fehlenden Parameter;</li>
+<li>Zeilen 38–40: Das Attribut <strong><em>[[FromQuery(Name = &quot;q&quot;)]]</em></strong> legt fest, <strong>wo</strong> der Wert zu suchen ist (in der URL) und <strong>unter welchem Namen</strong>: Der Parameter <strong><em>[search]</em></strong> der Action erhält den Parameter <strong><em>[q]</em></strong> aus der URL;</li>
+<li>Zeilen 45–47: <strong><em>[Request.Query]</em></strong> bietet Zugriff auf alle URL-Parameter, ohne Zuordnung oder Konvertierung. <strong><em>[ToDictionary]</em></strong> (<em>[LINQ]</em>) erzeugt daraus ein Dictionary, das in JSON serialisiert wird.</li>
+</ul>
+<p>Die Ergebnisse:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>curl -i "http://localhost:5000/parameters/action01?name=martin"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>name = [martin], of type String
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>curl -i "http://localhost:5000/parameters/action01"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>name = [], of type null
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>curl -i "http://localhost:5000/parameters/action02?age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>age = [42], of type Int32, ModelState.IsValid = True
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>curl -i "http://localhost:5000/parameters/action02?age=abc"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>age = [0], of type Int32, ModelState.IsValid = False
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>curl -i "http://localhost:5000/parameters/action02"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>age = [0], of type Int32, ModelState.IsValid = True
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>curl -i "http://localhost:5000/parameters/action03?age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>age = [42], ModelState.IsValid = True
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>curl -i "http://localhost:5000/parameters/action03"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>age = [null], ModelState.IsValid = True
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>curl -i "http://localhost:5000/parameters/action03?age=abc"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>age = [null], ModelState.IsValid = False
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>curl -i "http://localhost:5000/parameters/action04"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a>page = [1]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>curl -i "http://localhost:5000/parameters/action04?page=2"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a>page = [2]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>curl -i "http://localhost:5000/parameters/action05?q=aspnet"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a>search = [aspnet]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a>curl -i "http://localhost:5000/parameters/action06?name=martin&amp;age=42"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span>
+<span class="normal"><a href="#__codelineno-24-3">3</a></span>
+<span class="normal"><a href="#__codelineno-24-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a>{"name":"martin","age":"42"}
+</code></pre></div></td></tr></table></div>
+<p>Die Anführungszeichen um die URL sind erforderlich, wenn sie das Zeichen <strong><em>[&amp;]</em></strong> enthält, das für die Konsole eine besondere Bedeutung hat. Beachten Sie Folgendes:</p>
+<ul>
+<li>Ein Parameter wird unabhängig von der Groß- und Kleinschreibung über seinen Namen gebunden (<strong><em>[?NAME=martin]</em></strong> ist ebenfalls gültig);</li>
+<li>sein Wert wird <strong>konvertiert</strong>, und zwar in den deklarierten Typ. Das ist ein wichtiger Unterschied zu <em>[NestJS]</em>, wo der Typ eines Parameters lediglich eine Deklaration war (<em>[TypeScript]</em>), die zur Kompilierzeit entfernt wurde;</li>
+<li>Eine nicht mögliche Konvertierung verursacht keinen Fehler: Die Action wird mit einem Standardwert ausgeführt, und es ist Sache der Action, <strong><em>[ModelState.IsValid]</em></strong> zu prüfen. Ein „nullable“ Typ (<strong><em>[int?]</em></strong>) verhindert, dass ein fehlender oder ungültiger Wert mit 0 verwechselt wird.</li>
+</ul>
+<p>Akzentuierte Zeichen und Leerzeichen werden in einer URL codiert (<strong><em>[%C3%A9]</em></strong> für <strong><em>[é]</em></strong> usw.): <em>[ASP.NET Core]</em> decodiert sie vor dem Binding.</p>
+<p><img src="images/10000000000002BE00000066F8FC4629.png" width="428" height="62" style="width:11.322cm;height:1.646cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE00000066F8FC4629.png" /></p>
+<h2 id="32-beispiel-08-ein-durch-eine-klasse-beschriebenes-action-modell">3.2. <span style="color: #2e74b5">Beispiel 08: Ein durch eine Klasse beschriebenes Action-Modell</span></h2>
+<p>Wenn eine Action mehrere Parameter hat, werden sie durch eine Klasse beschrieben. Jede Eigenschaft der Klasse trägt <strong>Validierungsattribute</strong> aus dem Standard-Namespace <strong><em>[System.ComponentModel.DataAnnotations]</em></strong>. Das entspricht den Dekoratoren der Bibliothek <em>[class-validator]</em> von <em>[NestJS]</em>.</p>
+<p>Die Datei <strong><em>[Models/PersonModel.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span>
+<span class="normal"><a href="#__codelineno-25-11">11</a></span>
+<span class="normal"><a href="#__codelineno-25-12">12</a></span>
+<span class="normal"><a href="#__codelineno-25-13">13</a></span>
+<span class="normal"><a href="#__codelineno-25-14">14</a></span>
+<span class="normal"><a href="#__codelineno-25-15">15</a></span>
+<span class="normal"><a href="#__codelineno-25-16">16</a></span>
+<span class="normal"><a href="#__codelineno-25-17">17</a></span>
+<span class="normal"><a href="#__codelineno-25-18">18</a></span>
+<span class="normal"><a href="#__codelineno-25-19">19</a></span>
+<span class="normal"><a href="#__codelineno-25-20">20</a></span>
+<span class="normal"><a href="#__codelineno-25-21">21</a></span>
+<span class="normal"><a href="#__codelineno-25-22">22</a></span>
+<span class="normal"><a href="#__codelineno-25-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example08.Models</span><span class="p">;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="c1">// das Action-Modell: eine Klasse, deren Eigenschaften jeweils ihre Einschränkungen tragen</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PersonModel</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="p">{</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8"></a><span class="w">    </span><span class="na">[Required(ErrorMessage = "the name is required")]</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9"></a><span class="w">    </span><span class="na">[StringLength(20, MinimumLength = 2, ErrorMessage = "the name must have 2 to 20 characters")]</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11"></a>
+<a id="__codelineno-25-12" name="__codelineno-25-12"></a><span class="w">    </span><span class="na">[Required(ErrorMessage = "the age is required")]</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13"></a><span class="w">    </span><span class="na">[Range(0, 150, ErrorMessage = "the age must be between 0 and 150")]</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int?</span><span class="w"> </span><span class="n">Age</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15"></a>
+<a id="__codelineno-25-16" name="__codelineno-25-16"></a><span class="w">    </span><span class="na">[Required(ErrorMessage = "the title is required")]</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17"></a><span class="w">    </span><span class="na">[AllowedValues("Mr", "Mme", "Melle", ErrorMessage = "unknown title")]</span>
+<a id="__codelineno-25-18" name="__codelineno-25-18"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">Title</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19"></a>
+<a id="__codelineno-25-20" name="__codelineno-25-20"></a><span class="w">    </span><span class="c1">// optional: kein [Required]</span>
+<a id="__codelineno-25-21" name="__codelineno-25-21"></a><span class="w">    </span><span class="na">[EmailAddress(ErrorMessage = "invalid email address")]</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">Email</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeile 1: der Namespace der Validierungsattribute;</li>
+<li>Zeile 10: Jeder erwartete Parameter ist eine öffentliche <strong>Eigenschaft</strong> (<strong><em>[{ get; set; }]</em></strong>: Sie kann gelesen und geschrieben werden). Das Model Binding erstellt ein <strong><em>[PersonModel]</em></strong>-Objekt und füllt dann jede Eigenschaft mit dem gleichnamigen Parameter;</li>
+<li>Zeilen 8–9: Der Name ist erforderlich (<strong><em>[[Required]]</em></strong>) und muss zwischen 2 und 20 Zeichen lang sein (<strong><em>[[StringLength]]</em></strong>). Jedes Attribut akzeptiert eine benutzerdefinierte Fehlermeldung (<strong><em>[ErrorMessage]</em></strong>). Die Eigenschaften werden als „nullable“ deklariert (<strong><em>[string?]</em></strong>, <strong><em>[int?]</em></strong>): Ein Parameter kann in einer Anfrage fehlen, und <strong><em>[[Required]]</em></strong> erzwingt diese Anforderung;</li>
+<li>Zeilen 12–14: Das Alter wird in eine ganze Zahl konvertiert, die erforderlich ist und zwischen 0 und 150 liegen muss (<strong><em>[[Range]]</em></strong>);</li>
+<li>Zeile 17: Die Anrede muss zu einer Liste von Werten gehören (<strong><em>[[AllowedValues]]</em></strong>, eingeführt mit <em>[.NET]</em> 8);</li>
+<li>Zeile 21: Die E-Mail-Adresse ist optional (kein <strong><em>[[Required]]</em></strong>); wenn sie angegeben wird, muss sie gültig sein.</li>
+</ul>
+<p>Die Datei <strong><em>[Controllers/PersonsController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-26-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-26-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-26-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-26-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-26-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-26-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-26-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span>
+<span class="normal"><a href="#__codelineno-26-13">13</a></span>
+<span class="normal"><a href="#__codelineno-26-14">14</a></span>
+<span class="normal"><a href="#__codelineno-26-15">15</a></span>
+<span class="normal"><a href="#__codelineno-26-16">16</a></span>
+<span class="normal"><a href="#__codelineno-26-17">17</a></span>
+<span class="normal"><a href="#__codelineno-26-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example08.Models</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example08.Controllers</span><span class="p">;</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="c1">// [ApiController]: eine Anfrage mit ungültigem Modell wird</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="c1">// AUTOMATISCH abgewiesen (Fehler 400), noch bevor die Action läuft</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8"></a><span class="na">[ApiController]</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9"></a><span class="na">[Route("persons")]</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PersonsController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11"></a><span class="p">{</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12"></a><span class="w">    </span><span class="c1">// /persons/action01?name=martin&amp;age=42&amp;title=Mr</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13"></a><span class="w">    </span><span class="na">[HttpGet("action01")]</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action01</span><span class="p">([</span><span class="n">FromQuery</span><span class="p">]</span><span class="w"> </span><span class="n">PersonModel</span><span class="w"> </span><span class="n">person</span><span class="p">)</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">person</span><span class="p">,</span><span class="w"> </span><span class="n">ageType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="n">Age</span><span class="o">?.</span><span class="n">GetType</span><span class="p">().</span><span class="n">Name</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-26-17" name="__codelineno-26-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-18" name="__codelineno-26-18"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 6: Das Attribut <strong><em>[[ApiController]]</em></strong> macht den Controller zu einem <strong>JSON-Server</strong>  (einer API). Es ändert mehrere Verhaltensweisen, unter anderem dieses: Eine Anfrage mit einem ungültigen Modell wird <strong>automatisch</strong> mit einem Fehler 400 abgelehnt, noch bevor die Action ausgeführt wird. Das entspricht der globalen <strong><em>[ValidationPipe]</em></strong>  von <em>[NestJS]</em>;</li>
+<li>Zeile 14: Die Action erhält ein <strong><em>[PersonModel]</em></strong>, das aus den URL-Parametern gefüllt wird. Mit <strong><em>[[ApiController]]</em></strong> wird ein Parameter vom Typ einer Klasse standardmäßig im <strong>Body</strong> der Anfrage gesucht (in JSON): <strong><em>[[FromQuery]]</em></strong> legt fest, dass er in der URL gesucht werden soll;</li>
+<li>Zeile 16: Die Action gibt die empfangene Person und den Typ ihres Alters zurück.</li>
+</ul>
+<p>Eine gültige Anfrage mit einem Parameter <strong><em>[pirate]</em></strong>, der keiner Eigenschaft entspricht:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>curl -i "http://localhost:5000/persons/action01?name=martin&amp;age=42&amp;title=Mr&amp;pirate=1"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a>
+<a id="__codelineno-28-4" name="__codelineno-28-4"></a>{"person":{"name":"martin","age":42,"title":"Mr","email":null},"ageType":"Int32"}
+</code></pre></div></td></tr></table></div>
+<p>Das Alter ist tatsächlich eine Zahl, und der Parameter <strong><em>[pirate]</em></strong> wurde ignoriert: Das Binding füllt nur die Eigenschaften der Klasse. Eine ungültige Anfrage (die JSON-Antwort wurde zur besseren Lesbarkeit formatiert):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a>curl -i "http://localhost:5000/persons/action01?name=m&amp;age=abc&amp;title=Dr&amp;email=xx"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-30-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-30-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-30-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-30-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-30-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-30-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-30-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-30-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-30-10">10</a></span>
+<span class="normal"><a href="#__codelineno-30-11">11</a></span>
+<span class="normal"><a href="#__codelineno-30-12">12</a></span>
+<span class="normal"><a href="#__codelineno-30-13">13</a></span>
+<span class="normal"><a href="#__codelineno-30-14">14</a></span>
+<span class="normal"><a href="#__codelineno-30-15">15</a></span>
+<span class="normal"><a href="#__codelineno-30-16">16</a></span>
+<span class="normal"><a href="#__codelineno-30-17">17</a></span>
+<span class="normal"><a href="#__codelineno-30-18">18</a></span>
+<span class="normal"><a href="#__codelineno-30-19">19</a></span>
+<span class="normal"><a href="#__codelineno-30-20">20</a></span>
+<span class="normal"><a href="#__codelineno-30-21">21</a></span>
+<span class="normal"><a href="#__codelineno-30-22">22</a></span>
+<span class="normal"><a href="#__codelineno-30-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-30-2" name="__codelineno-30-2"></a>Content-Type: application/problem+json; charset=utf-8
+<a id="__codelineno-30-3" name="__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4"></a>{
+<a id="__codelineno-30-5" name="__codelineno-30-5"></a>  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+<a id="__codelineno-30-6" name="__codelineno-30-6"></a>  "title": "One or more validation errors occurred.",
+<a id="__codelineno-30-7" name="__codelineno-30-7"></a>  "status": 400,
+<a id="__codelineno-30-8" name="__codelineno-30-8"></a>  "errors": {
+<a id="__codelineno-30-9" name="__codelineno-30-9"></a>    "Age": [
+<a id="__codelineno-30-10" name="__codelineno-30-10"></a>      "The value 'abc' is not valid for Age."
+<a id="__codelineno-30-11" name="__codelineno-30-11"></a>    ],
+<a id="__codelineno-30-12" name="__codelineno-30-12"></a>    "Name": [
+<a id="__codelineno-30-13" name="__codelineno-30-13"></a>      "the name must have 2 to 20 characters"
+<a id="__codelineno-30-14" name="__codelineno-30-14"></a>    ],
+<a id="__codelineno-30-15" name="__codelineno-30-15"></a>    "Email": [
+<a id="__codelineno-30-16" name="__codelineno-30-16"></a>      "invalid email address"
+<a id="__codelineno-30-17" name="__codelineno-30-17"></a>    ],
+<a id="__codelineno-30-18" name="__codelineno-30-18"></a>    "Title": [
+<a id="__codelineno-30-19" name="__codelineno-30-19"></a>      "unknown title"
+<a id="__codelineno-30-20" name="__codelineno-30-20"></a>    ]
+<a id="__codelineno-30-21" name="__codelineno-30-21"></a>  },
+<a id="__codelineno-30-22" name="__codelineno-30-22"></a>  "traceId": "00-ea340e76f456fbefae537611139be71b-2db7a84085adc345-00"
+<a id="__codelineno-30-23" name="__codelineno-30-23"></a>}
+</code></pre></div></td></tr></table></div>
+<p><strong><em>[[ApiController]]</em></strong> hat die Anfrage mit einem Fehler 400 abgelehnt; ihr JSON-Body im Standardformat <em>[Problem Details]</em> (RFC 9110) listet die Fehler nach Feldern auf. Die Action wurde nicht ausgeführt. Der Fehler bei der Konvertierung des Alters hat eine englische Meldung, die von <em>[ASP.NET Core]</em> bereitgestellt wird; wir werden sehen, wie sie sich ersetzen lässt. Dasselbe gilt ganz ohne Parameter:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a>curl -i http://localhost:5000/persons/action01
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-32-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-32-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-32-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-32-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-32-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-32-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-32-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-32-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-32-10">10</a></span>
+<span class="normal"><a href="#__codelineno-32-11">11</a></span>
+<span class="normal"><a href="#__codelineno-32-12">12</a></span>
+<span class="normal"><a href="#__codelineno-32-13">13</a></span>
+<span class="normal"><a href="#__codelineno-32-14">14</a></span>
+<span class="normal"><a href="#__codelineno-32-15">15</a></span>
+<span class="normal"><a href="#__codelineno-32-16">16</a></span>
+<span class="normal"><a href="#__codelineno-32-17">17</a></span>
+<span class="normal"><a href="#__codelineno-32-18">18</a></span>
+<span class="normal"><a href="#__codelineno-32-19">19</a></span>
+<span class="normal"><a href="#__codelineno-32-20">20</a></span>
+<span class="normal"><a href="#__codelineno-32-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-32-2" name="__codelineno-32-2"></a>Content-Type: application/problem+json; charset=utf-8
+<a id="__codelineno-32-3" name="__codelineno-32-3"></a>
+<a id="__codelineno-32-4" name="__codelineno-32-4"></a>{
+<a id="__codelineno-32-5" name="__codelineno-32-5"></a>  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+<a id="__codelineno-32-6" name="__codelineno-32-6"></a>  "title": "One or more validation errors occurred.",
+<a id="__codelineno-32-7" name="__codelineno-32-7"></a>  "status": 400,
+<a id="__codelineno-32-8" name="__codelineno-32-8"></a>  "errors": {
+<a id="__codelineno-32-9" name="__codelineno-32-9"></a>    "Age": [
+<a id="__codelineno-32-10" name="__codelineno-32-10"></a>      "the age is required"
+<a id="__codelineno-32-11" name="__codelineno-32-11"></a>    ],
+<a id="__codelineno-32-12" name="__codelineno-32-12"></a>    "Name": [
+<a id="__codelineno-32-13" name="__codelineno-32-13"></a>      "the name is required"
+<a id="__codelineno-32-14" name="__codelineno-32-14"></a>    ],
+<a id="__codelineno-32-15" name="__codelineno-32-15"></a>    "Title": [
+<a id="__codelineno-32-16" name="__codelineno-32-16"></a>      "the title is required",
+<a id="__codelineno-32-17" name="__codelineno-32-17"></a>      "unknown title"
+<a id="__codelineno-32-18" name="__codelineno-32-18"></a>    ]
+<a id="__codelineno-32-19" name="__codelineno-32-19"></a>  },
+<a id="__codelineno-32-20" name="__codelineno-32-20"></a>  "traceId": "00-af1f22e662507d8f360028f71752ded1-4ff5a136398590da-00"
+<a id="__codelineno-32-21" name="__codelineno-32-21"></a>}
+</code></pre></div></td></tr></table></div>
+<p>Dieses Verhalten ist für einen JSON-Server geeignet, der von einem <em>[JavaScript]</em>-Client abgefragt wird, der Fehler auf seine eigene Weise anzeigt. Für eine HTML-Anwendung ergibt ein Fehlercode wie bei JSON keinen Sinn: Wir möchten das Formular zusammen mit seinen Fehlern erneut anzeigen. Das folgende Beispiel zeigt, wie man die Kontrolle übernimmt.</p>
+<h2 id="33-beispiel-09-von-der-action-durchgefuhrte-validierung">3.3. <span style="color: #2e74b5">Beispiel 09: Von der Action durchgeführte Validierung</span></h2>
+<p>Beispiel 09 verwendet kein <strong><em>[[ApiController]]</em></strong>. Die Klasse <strong><em>[PersonModel]</em></strong> ist identisch; nur der Controller ändert sich. Die Datei <strong><em>[Controllers/PersonsController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-33-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-33-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-33-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-33-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-33-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-33-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-33-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-33-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-33-10">10</a></span>
+<span class="normal"><a href="#__codelineno-33-11">11</a></span>
+<span class="normal"><a href="#__codelineno-33-12">12</a></span>
+<span class="normal"><a href="#__codelineno-33-13">13</a></span>
+<span class="normal"><a href="#__codelineno-33-14">14</a></span>
+<span class="normal"><a href="#__codelineno-33-15">15</a></span>
+<span class="normal"><a href="#__codelineno-33-16">16</a></span>
+<span class="normal"><a href="#__codelineno-33-17">17</a></span>
+<span class="normal"><a href="#__codelineno-33-18">18</a></span>
+<span class="normal"><a href="#__codelineno-33-19">19</a></span>
+<span class="normal"><a href="#__codelineno-33-20">20</a></span>
+<span class="normal"><a href="#__codelineno-33-21">21</a></span>
+<span class="normal"><a href="#__codelineno-33-22">22</a></span>
+<span class="normal"><a href="#__codelineno-33-23">23</a></span>
+<span class="normal"><a href="#__codelineno-33-24">24</a></span>
+<span class="normal"><a href="#__codelineno-33-25">25</a></span>
+<span class="normal"><a href="#__codelineno-33-26">26</a></span>
+<span class="normal"><a href="#__codelineno-33-27">27</a></span>
+<span class="normal"><a href="#__codelineno-33-28">28</a></span>
+<span class="normal"><a href="#__codelineno-33-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Net</span><span class="p">;</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example09.Models</span><span class="p">;</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4"></a>
+<a id="__codelineno-33-5" name="__codelineno-33-5"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example09.Controllers</span><span class="p">;</span>
+<a id="__codelineno-33-6" name="__codelineno-33-6"></a>
+<a id="__codelineno-33-7" name="__codelineno-33-7"></a><span class="c1">// kein [ApiController]: die Action wird IMMER ausgeführt, und sie ist es, die</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8"></a><span class="c1">// entscheidet, was bei einem ungültigen Modell zu tun ist</span>
+<a id="__codelineno-33-9" name="__codelineno-33-9"></a><span class="na">[Route("persons")]</span>
+<a id="__codelineno-33-10" name="__codelineno-33-10"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PersonsController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-33-11" name="__codelineno-33-11"></a><span class="p">{</span>
+<a id="__codelineno-33-12" name="__codelineno-33-12"></a><span class="w">    </span><span class="na">[HttpGet("action01")]</span>
+<a id="__codelineno-33-13" name="__codelineno-33-13"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ContentResult</span><span class="w"> </span><span class="nf">Action01</span><span class="p">(</span><span class="n">PersonModel</span><span class="w"> </span><span class="n">person</span><span class="p">)</span>
+<a id="__codelineno-33-14" name="__codelineno-33-14"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-33-15" name="__codelineno-33-15"></a><span class="w">        </span><span class="c1">// ModelState: das Ergebnis des Bindings UND der Validierung des Modells</span>
+<a id="__codelineno-33-16" name="__codelineno-33-16"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<a id="__codelineno-33-17" name="__codelineno-33-17"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-33-18" name="__codelineno-33-18"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">Page</span><span class="p">(</span><span class="s">$"&lt;p&gt;Welcome {person.Title} {person.Name} ({person.Age} years old)&lt;/p&gt;"</span><span class="p">);</span>
+<a id="__codelineno-33-19" name="__codelineno-33-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-33-20" name="__codelineno-33-20"></a><span class="w">        </span><span class="c1">// die Fehler, Feld für Feld</span>
+<a id="__codelineno-33-21" name="__codelineno-33-21"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelState</span>
+<a id="__codelineno-33-22" name="__codelineno-33-22"></a><span class="w">            </span><span class="p">.</span><span class="n">Where</span><span class="p">(</span><span class="n">field</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">field</span><span class="p">.</span><span class="n">Value</span><span class="o">!</span><span class="p">.</span><span class="n">Errors</span><span class="p">.</span><span class="n">Count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-33-23" name="__codelineno-33-23"></a><span class="w">            </span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">field</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">$"&lt;li&gt;{field.Key}: {string.Join("</span><span class="p">,</span><span class="w"> </span><span class="s">", field.Value!.Errors.Select(e =&gt; e.ErrorMessage))}&lt;/li&gt;"</span><span class="p">);</span>
+<a id="__codelineno-33-24" name="__codelineno-33-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Page</span><span class="p">(</span><span class="s">$"&lt;p&gt;The form contains errors:&lt;/p&gt;&lt;ul&gt;{string.Join("", items)}&lt;/ul&gt;"</span><span class="p">);</span>
+<a id="__codelineno-33-25" name="__codelineno-33-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-33-26" name="__codelineno-33-26"></a>
+<a id="__codelineno-33-27" name="__codelineno-33-27"></a><span class="w">    </span><span class="c1">// eine HTML-Seite (in beiden Fällen Code 200)</span>
+<a id="__codelineno-33-28" name="__codelineno-33-28"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ContentResult</span><span class="w"> </span><span class="nf">Page</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">html</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Content</span><span class="p">(</span><span class="n">html</span><span class="p">,</span><span class="w"> </span><span class="s">"text/html; charset=utf-8"</span><span class="p">);</span>
+<a id="__codelineno-33-29" name="__codelineno-33-29"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeile 9: Ohne <strong><em>[[ApiController]]</em></strong> wird die Action <strong>immer</strong> ausgeführt, unabhängig davon, ob das Modell gültig ist oder nicht. Ein Parameter vom Typ einer Klasse wird überall gesucht: in der URL, in den Formularfeldern und in der Route;</li>
+<li>Zeile 13: Das Model Binding <strong>und</strong> die Validierung wurden vor der Ausführung der Action durchgeführt: Das Objekt <strong><em>[person]</em></strong> ist gefüllt, und <strong><em>[ModelState]</em></strong> enthält eventuelle Fehler;</li>
+<li>Zeilen 16–18: keine Fehler: eine Willkommensseite;</li>
+<li>Zeilen 21–23: andernfalls die Liste der Fehler. <strong><em>[ModelState]</em></strong> ist ein Dictionary, in dem jeder Schlüssel der Name eines Feldes ist ([Name], [Age] ...) und jeder Wert der Status dieses Feldes samt der Liste seiner Fehler (<strong><em>[Errors]</em></strong>). Die Methoden <em>[LINQ],</em> <strong><em>[Where]</em></strong> (filtern) und <strong><em>[Select]</em></strong> (transformieren) behalten die Felder mit Fehlern bei und erzeugen pro Feld eine HTML-Zeile. <strong><em>[!]</em></strong> teilt dem Compiler mit, dass ein Wert nicht <strong><em>[null]</em></strong> ist;</li>
+<li>Zeile 24: eine Seite, die die Fehler auflistet;</li>
+<li>Zeile 28: In beiden Fällen ist die Antwort eine HTML-Seite mit dem Statuscode 200.</li>
+</ul>
+<p><img src="images/10000000000002BE000000653365D811.png" width="428" height="62" style="width:11.322cm;height:1.63cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000653365D811.png" /></p>
+<p><img src="images/10000000000002BE000000ABEF3BA135.png" width="428" height="104" style="width:11.322cm;height:2.759cm;" alt="Image" class="odt-zoomable" data-zoom-src="images/10000000000002BE000000ABEF3BA135.png" /></p>
+<p>Ein Konvertierungsfehler erscheint in <strong><em>[ModelState]</em></strong> als Validierungsfehler:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a>curl -i "http://localhost:5000/persons/action01?name=martin&amp;age=abc&amp;title=Mr"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span>
+<span class="normal"><a href="#__codelineno-35-3">3</a></span>
+<span class="normal"><a href="#__codelineno-35-4">4</a></span>
+<span class="normal"><a href="#__codelineno-35-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-35-2" name="__codelineno-35-2"></a>Content-Length: 92
+<a id="__codelineno-35-3" name="__codelineno-35-3"></a>Content-Type: text/html; charset=utf-8
+<a id="__codelineno-35-4" name="__codelineno-35-4"></a>
+<a id="__codelineno-35-5" name="__codelineno-35-5"></a>&lt;p&gt;The form contains errors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Age: The value 'abc' is not valid for Age.&lt;/li&gt;&lt;/ul&gt;
+</code></pre></div></td></tr></table></div>
+<p>Das ist die Technik, die alle Formulare der Fallstudie verwenden werden (siehe Beispiel 19): Die Action prüft <strong><em>[ModelState.IsValid]</em></strong> und zeigt das Formular erneut an, falls Fehler vorliegen.</p>
+<h2 id="34-beispiel-10-mehrfachparameter">3.4. <span style="color: #2e74b5">Beispiel 10: Mehrfachparameter</span></h2>
+<p>Ein einzelner Parameter kann in einer Anfrage mehrfach vorkommen: Das ist bei Kontrollkästchen eines Formulars oder einer Mehrfachauswahlliste der Fall (<strong><em>[?color=red&amp;color=green]</em></strong>).</p>
+<p>Die Datei <strong><em>[Controllers/ArraysController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-36-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-36-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-36-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-36-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-36-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-36-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-36-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-36-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-36-10">10</a></span>
+<span class="normal"><a href="#__codelineno-36-11">11</a></span>
+<span class="normal"><a href="#__codelineno-36-12">12</a></span>
+<span class="normal"><a href="#__codelineno-36-13">13</a></span>
+<span class="normal"><a href="#__codelineno-36-14">14</a></span>
+<span class="normal"><a href="#__codelineno-36-15">15</a></span>
+<span class="normal"><a href="#__codelineno-36-16">16</a></span>
+<span class="normal"><a href="#__codelineno-36-17">17</a></span>
+<span class="normal"><a href="#__codelineno-36-18">18</a></span>
+<span class="normal"><a href="#__codelineno-36-19">19</a></span>
+<span class="normal"><a href="#__codelineno-36-20">20</a></span>
+<span class="normal"><a href="#__codelineno-36-21">21</a></span>
+<span class="normal"><a href="#__codelineno-36-22">22</a></span>
+<span class="normal"><a href="#__codelineno-36-23">23</a></span>
+<span class="normal"><a href="#__codelineno-36-24">24</a></span>
+<span class="normal"><a href="#__codelineno-36-25">25</a></span>
+<span class="normal"><a href="#__codelineno-36-26">26</a></span>
+<span class="normal"><a href="#__codelineno-36-27">27</a></span>
+<span class="normal"><a href="#__codelineno-36-28">28</a></span>
+<span class="normal"><a href="#__codelineno-36-29">29</a></span>
+<span class="normal"><a href="#__codelineno-36-30">30</a></span>
+<span class="normal"><a href="#__codelineno-36-31">31</a></span>
+<span class="normal"><a href="#__codelineno-36-32">32</a></span>
+<span class="normal"><a href="#__codelineno-36-33">33</a></span>
+<span class="normal"><a href="#__codelineno-36-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example10.Models</span><span class="p">;</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3"></a>
+<a id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example10.Controllers</span><span class="p">;</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5"></a>
+<a id="__codelineno-36-6" name="__codelineno-36-6"></a><span class="na">[Route("arrays")]</span>
+<a id="__codelineno-36-7" name="__codelineno-36-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ArraysController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-36-8" name="__codelineno-36-8"></a><span class="p">{</span>
+<a id="__codelineno-36-9" name="__codelineno-36-9"></a><span class="w">    </span><span class="c1">// /arrays/action01?color=red&amp;color=green: ein einfacher Parameter</span>
+<a id="__codelineno-36-10" name="__codelineno-36-10"></a><span class="w">    </span><span class="na">[HttpGet("action01")]</span>
+<a id="__codelineno-36-11" name="__codelineno-36-11"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action01</span><span class="p">(</span><span class="kt">string?</span><span class="w"> </span><span class="n">color</span><span class="p">)</span>
+<a id="__codelineno-36-12" name="__codelineno-36-12"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-36-13" name="__codelineno-36-13"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-36-14" name="__codelineno-36-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-36-15" name="__codelineno-36-15"></a>
+<a id="__codelineno-36-16" name="__codelineno-36-16"></a><span class="w">    </span><span class="c1">// /arrays/action02?color=red&amp;color=green: ein Array</span>
+<a id="__codelineno-36-17" name="__codelineno-36-17"></a><span class="w">    </span><span class="na">[HttpGet("action02")]</span>
+<a id="__codelineno-36-18" name="__codelineno-36-18"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action02</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">color</span><span class="p">)</span>
+<a id="__codelineno-36-19" name="__codelineno-36-19"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-36-20" name="__codelineno-36-20"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-36-21" name="__codelineno-36-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-36-22" name="__codelineno-36-22"></a>
+<a id="__codelineno-36-23" name="__codelineno-36-23"></a><span class="w">    </span><span class="c1">// /arrays/action03?color=red: eine Liste, validiert durch ChoiceModel</span>
+<a id="__codelineno-36-24" name="__codelineno-36-24"></a><span class="w">    </span><span class="na">[HttpGet("action03")]</span>
+<a id="__codelineno-36-25" name="__codelineno-36-25"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action03</span><span class="p">(</span><span class="n">ChoiceModel</span><span class="w"> </span><span class="n">choice</span><span class="p">)</span>
+<a id="__codelineno-36-26" name="__codelineno-36-26"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-36-27" name="__codelineno-36-27"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span>
+<a id="__codelineno-36-28" name="__codelineno-36-28"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-36-29" name="__codelineno-36-29"></a><span class="w">            </span><span class="n">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">choice</span><span class="p">.</span><span class="n">Color</span><span class="p">,</span>
+<a id="__codelineno-36-30" name="__codelineno-36-30"></a><span class="w">            </span><span class="n">valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">,</span>
+<a id="__codelineno-36-31" name="__codelineno-36-31"></a><span class="w">            </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelState</span><span class="p">.</span><span class="n">Values</span><span class="p">.</span><span class="n">SelectMany</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">Errors</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">ErrorMessage</span><span class="p">),</span>
+<a id="__codelineno-36-32" name="__codelineno-36-32"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-36-33" name="__codelineno-36-33"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-36-34" name="__codelineno-36-34"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Die Action <strong><em>[Action01]</em></strong> (Zeilen 11–13) zeigt, was ein einzelner Parameter erhält:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1"></a>curl -i "http://localhost:5000/arrays/action01?color=red"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-38-2" name="__codelineno-38-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-38-3" name="__codelineno-38-3"></a>
+<a id="__codelineno-38-4" name="__codelineno-38-4"></a>{"color":"red"}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1"></a>curl -i "http://localhost:5000/arrays/action01?color=red&amp;color=green"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span>
+<span class="normal"><a href="#__codelineno-40-2">2</a></span>
+<span class="normal"><a href="#__codelineno-40-3">3</a></span>
+<span class="normal"><a href="#__codelineno-40-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-40-2" name="__codelineno-40-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-40-3" name="__codelineno-40-3"></a>
+<a id="__codelineno-40-4" name="__codelineno-40-4"></a>{"color":"red"}
+</code></pre></div></td></tr></table></div>
+<p>Ein Parameter vom Typ <strong><em>[string]</em></strong> erhält nur den ersten Wert. Ein Parameter vom Typ Array (<strong><em>[Action02]</em></strong>, Zeilen 18–20) erhält alle, ob es null, einer oder mehrere sind:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1"></a>curl -i "http://localhost:5000/arrays/action02?color=red"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span>
+<span class="normal"><a href="#__codelineno-42-2">2</a></span>
+<span class="normal"><a href="#__codelineno-42-3">3</a></span>
+<span class="normal"><a href="#__codelineno-42-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-42-2" name="__codelineno-42-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-42-3" name="__codelineno-42-3"></a>
+<a id="__codelineno-42-4" name="__codelineno-42-4"></a>{"color":["red"],"count":1}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1"></a>curl -i "http://localhost:5000/arrays/action02?color=red&amp;color=green"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span>
+<span class="normal"><a href="#__codelineno-44-2">2</a></span>
+<span class="normal"><a href="#__codelineno-44-3">3</a></span>
+<span class="normal"><a href="#__codelineno-44-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-44-2" name="__codelineno-44-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-44-3" name="__codelineno-44-3"></a>
+<a id="__codelineno-44-4" name="__codelineno-44-4"></a>{"color":["red","green"],"count":2}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1"></a>curl -i "http://localhost:5000/arrays/action02"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span>
+<span class="normal"><a href="#__codelineno-46-2">2</a></span>
+<span class="normal"><a href="#__codelineno-46-3">3</a></span>
+<span class="normal"><a href="#__codelineno-46-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-46-2" name="__codelineno-46-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-46-3" name="__codelineno-46-3"></a>
+<a id="__codelineno-46-4" name="__codelineno-46-4"></a>{"color":[],"count":0}
+</code></pre></div></td></tr></table></div>
+<p><em>[ASP.NET Core]</em> vermeidet so eine häufige Falle von <em>[NestJS]</em> (<em>[Express]</em>), wo dieselbe Variable bei einem einzelnen Wert eine Zeichenkette und bei mehreren Werten ein Array war. Die Liste muss trotzdem noch validiert werden. Die Datei <strong><em>[Models/ChoiceModel.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-47-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-47-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-47-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-47-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-47-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-47-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-47-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-47-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-47-10">10</a></span>
+<span class="normal"><a href="#__codelineno-47-11">11</a></span>
+<span class="normal"><a href="#__codelineno-47-12">12</a></span>
+<span class="normal"><a href="#__codelineno-47-13">13</a></span>
+<span class="normal"><a href="#__codelineno-47-14">14</a></span>
+<span class="normal"><a href="#__codelineno-47-15">15</a></span>
+<span class="normal"><a href="#__codelineno-47-16">16</a></span>
+<span class="normal"><a href="#__codelineno-47-17">17</a></span>
+<span class="normal"><a href="#__codelineno-47-18">18</a></span>
+<span class="normal"><a href="#__codelineno-47-19">19</a></span>
+<span class="normal"><a href="#__codelineno-47-20">20</a></span>
+<span class="normal"><a href="#__codelineno-47-21">21</a></span>
+<span class="normal"><a href="#__codelineno-47-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<a id="__codelineno-47-2" name="__codelineno-47-2"></a>
+<a id="__codelineno-47-3" name="__codelineno-47-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example10.Models</span><span class="p">;</span>
+<a id="__codelineno-47-4" name="__codelineno-47-4"></a>
+<a id="__codelineno-47-5" name="__codelineno-47-5"></a><span class="c1">// IValidatableObject: eine in C# geschriebene Validierung für das, was die Attribute</span>
+<a id="__codelineno-47-6" name="__codelineno-47-6"></a><span class="c1">// nicht ausdrücken können (hier: JEDES Element der Liste)</span>
+<a id="__codelineno-47-7" name="__codelineno-47-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ChoiceModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IValidatableObject</span>
+<a id="__codelineno-47-8" name="__codelineno-47-8"></a><span class="p">{</span>
+<a id="__codelineno-47-9" name="__codelineno-47-9"></a><span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">Colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">"red"</span><span class="p">,</span><span class="w"> </span><span class="s">"green"</span><span class="p">,</span><span class="w"> </span><span class="s">"blue"</span><span class="p">];</span>
+<a id="__codelineno-47-10" name="__codelineno-47-10"></a>
+<a id="__codelineno-47-11" name="__codelineno-47-11"></a><span class="w">    </span><span class="na">[MinLength(1, ErrorMessage = "choose at least one color")]</span>
+<a id="__codelineno-47-12" name="__codelineno-47-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<a id="__codelineno-47-13" name="__codelineno-47-13"></a>
+<a id="__codelineno-47-14" name="__codelineno-47-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IEnumerable</span><span class="o">&lt;</span><span class="n">ValidationResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Validate</span><span class="p">(</span><span class="n">ValidationContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<a id="__codelineno-47-15" name="__codelineno-47-15"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-47-16" name="__codelineno-47-16"></a><span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Color</span><span class="p">.</span><span class="n">Where</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">!</span><span class="n">Colors</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span>
+<a id="__codelineno-47-17" name="__codelineno-47-17"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-47-18" name="__codelineno-47-18"></a><span class="w">            </span><span class="c1">// yield return: die Methode gibt die Fehler einzeln zurück</span>
+<a id="__codelineno-47-19" name="__codelineno-47-19"></a><span class="w">            </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">ValidationResult</span><span class="p">(</span><span class="s">$"unknown color: {color}"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="k">nameof</span><span class="p">(</span><span class="n">Color</span><span class="p">)]);</span>
+<a id="__codelineno-47-20" name="__codelineno-47-20"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-47-21" name="__codelineno-47-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-47-22" name="__codelineno-47-22"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Kommentieren wir diesen Code:</p>
+<ul>
+<li>Zeile 7: Die Klasse implementiert die Schnittstelle <strong><em>[IValidatableObject]</em></strong>: eine in <em>[C#]</em> geschriebene Validierung für das, was die Attribute nicht ausdrücken können;</li>
+<li>Zeile 11: <strong><em>[[MinLength(1)]]</em></strong>: Die Liste muss mindestens ein Element enthalten;</li>
+<li>Zeilen 14–18: Die Methode <strong><em>[Validate]</em></strong>, die von der Validierung <strong>nach</strong> den Attributen aufgerufen wird, prüft jede Farbe. Für jede unbekannte Farbe gibt sie einen Fehler (<strong><em>[ValidationResult]</em></strong>) zurück und gibt dabei das betroffene Feld an. <strong><em>[yield return]</em></strong> gibt die Fehler einzeln zurück, ohne eine Liste zu erstellen.</li>
+</ul>
+<p>Die Action <strong><em>[Action03]</em></strong> des Controllers erhält ein <strong><em>[ChoiceModel]</em></strong> und gibt dessen Inhalt zusammen mit dem Validierungsstatus zurück:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1"></a>curl -i "http://localhost:5000/arrays/action03?color=red&amp;color=green"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span>
+<span class="normal"><a href="#__codelineno-49-2">2</a></span>
+<span class="normal"><a href="#__codelineno-49-3">3</a></span>
+<span class="normal"><a href="#__codelineno-49-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-49-2" name="__codelineno-49-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-49-3" name="__codelineno-49-3"></a>
+<a id="__codelineno-49-4" name="__codelineno-49-4"></a>{"colors":["red","green"],"valid":true,"errors":[]}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1"></a>curl -i "http://localhost:5000/arrays/action03?color=red&amp;color=black"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1">1</a></span>
+<span class="normal"><a href="#__codelineno-51-2">2</a></span>
+<span class="normal"><a href="#__codelineno-51-3">3</a></span>
+<span class="normal"><a href="#__codelineno-51-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-51-2" name="__codelineno-51-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-51-3" name="__codelineno-51-3"></a>
+<a id="__codelineno-51-4" name="__codelineno-51-4"></a>{"colors":["red","black"],"valid":false,"errors":["unknown color: black"]}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1"></a>curl -i "http://localhost:5000/arrays/action03"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-53-1">1</a></span>
+<span class="normal"><a href="#__codelineno-53-2">2</a></span>
+<span class="normal"><a href="#__codelineno-53-3">3</a></span>
+<span class="normal"><a href="#__codelineno-53-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-53-2" name="__codelineno-53-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-53-3" name="__codelineno-53-3"></a>
+<a id="__codelineno-53-4" name="__codelineno-53-4"></a>{"colors":[],"valid":false,"errors":["choose at least one color"]}
+</code></pre></div></td></tr></table></div>
+<h2 id="35-beispiel-11-parameter-einer-post-anfrage">3.5. <span style="color: #2e74b5">Beispiel 11: Parameter einer POST-Anfrage</span></h2>
+<p>Ein mit der Methode POST gesendetes HTML-Formular legt seine Felder in den <strong>Body</strong> der Anfrage, nicht in die URL. Die Datei <strong><em>[Controllers/PostController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-54-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-54-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-54-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-54-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-54-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-54-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-54-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-54-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-54-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-54-10">10</a></span>
+<span class="normal"><a href="#__codelineno-54-11">11</a></span>
+<span class="normal"><a href="#__codelineno-54-12">12</a></span>
+<span class="normal"><a href="#__codelineno-54-13">13</a></span>
+<span class="normal"><a href="#__codelineno-54-14">14</a></span>
+<span class="normal"><a href="#__codelineno-54-15">15</a></span>
+<span class="normal"><a href="#__codelineno-54-16">16</a></span>
+<span class="normal"><a href="#__codelineno-54-17">17</a></span>
+<span class="normal"><a href="#__codelineno-54-18">18</a></span>
+<span class="normal"><a href="#__codelineno-54-19">19</a></span>
+<span class="normal"><a href="#__codelineno-54-20">20</a></span>
+<span class="normal"><a href="#__codelineno-54-21">21</a></span>
+<span class="normal"><a href="#__codelineno-54-22">22</a></span>
+<span class="normal"><a href="#__codelineno-54-23">23</a></span>
+<span class="normal"><a href="#__codelineno-54-24">24</a></span>
+<span class="normal"><a href="#__codelineno-54-25">25</a></span>
+<span class="normal"><a href="#__codelineno-54-26">26</a></span>
+<span class="normal"><a href="#__codelineno-54-27">27</a></span>
+<span class="normal"><a href="#__codelineno-54-28">28</a></span>
+<span class="normal"><a href="#__codelineno-54-29">29</a></span>
+<span class="normal"><a href="#__codelineno-54-30">30</a></span>
+<span class="normal"><a href="#__codelineno-54-31">31</a></span>
+<span class="normal"><a href="#__codelineno-54-32">32</a></span>
+<span class="normal"><a href="#__codelineno-54-33">33</a></span>
+<span class="normal"><a href="#__codelineno-54-34">34</a></span>
+<span class="normal"><a href="#__codelineno-54-35">35</a></span>
+<span class="normal"><a href="#__codelineno-54-36">36</a></span>
+<span class="normal"><a href="#__codelineno-54-37">37</a></span>
+<span class="normal"><a href="#__codelineno-54-38">38</a></span>
+<span class="normal"><a href="#__codelineno-54-39">39</a></span>
+<span class="normal"><a href="#__codelineno-54-40">40</a></span>
+<span class="normal"><a href="#__codelineno-54-41">41</a></span>
+<span class="normal"><a href="#__codelineno-54-42">42</a></span>
+<span class="normal"><a href="#__codelineno-54-43">43</a></span>
+<span class="normal"><a href="#__codelineno-54-44">44</a></span>
+<span class="normal"><a href="#__codelineno-54-45">45</a></span>
+<span class="normal"><a href="#__codelineno-54-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Text.Json</span><span class="p">;</span>
+<a id="__codelineno-54-2" name="__codelineno-54-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example11.Models</span><span class="p">;</span>
+<a id="__codelineno-54-3" name="__codelineno-54-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-54-4" name="__codelineno-54-4"></a>
+<a id="__codelineno-54-5" name="__codelineno-54-5"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example11.Controllers</span><span class="p">;</span>
+<a id="__codelineno-54-6" name="__codelineno-54-6"></a>
+<a id="__codelineno-54-7" name="__codelineno-54-7"></a><span class="na">[Route("post")]</span>
+<a id="__codelineno-54-8" name="__codelineno-54-8"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PostController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-54-9" name="__codelineno-54-9"></a><span class="p">{</span>
+<a id="__codelineno-54-10" name="__codelineno-54-10"></a><span class="w">    </span><span class="c1">// die Felder eines HTML-Formulars (Body vom Typ application/x-www-form-urlencoded)</span>
+<a id="__codelineno-54-11" name="__codelineno-54-11"></a><span class="w">    </span><span class="na">[HttpPost("action01")]</span>
+<a id="__codelineno-54-12" name="__codelineno-54-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action01</span><span class="p">()</span>
+<a id="__codelineno-54-13" name="__codelineno-54-13"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-54-14" name="__codelineno-54-14"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span>
+<a id="__codelineno-54-15" name="__codelineno-54-15"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-54-16" name="__codelineno-54-16"></a><span class="w">            </span><span class="n">receivedType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span>
+<a id="__codelineno-54-17" name="__codelineno-54-17"></a><span class="w">            </span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">Form</span><span class="p">.</span><span class="n">ToDictionary</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">ToString</span><span class="p">()),</span>
+<a id="__codelineno-54-18" name="__codelineno-54-18"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-54-19" name="__codelineno-54-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-54-20" name="__codelineno-54-20"></a>
+<a id="__codelineno-54-21" name="__codelineno-54-21"></a><span class="w">    </span><span class="c1">// ein JSON-Body: [FromBody] deserialisiert ihn</span>
+<a id="__codelineno-54-22" name="__codelineno-54-22"></a><span class="w">    </span><span class="na">[HttpPost("action02")]</span>
+<a id="__codelineno-54-23" name="__codelineno-54-23"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action02</span><span class="p">([</span><span class="n">FromBody</span><span class="p">]</span><span class="w"> </span><span class="n">JsonElement</span><span class="w"> </span><span class="n">body</span><span class="p">)</span>
+<a id="__codelineno-54-24" name="__codelineno-54-24"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-54-25" name="__codelineno-54-25"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">receivedType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">ContentType</span><span class="p">,</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="p">};</span>
+<a id="__codelineno-54-26" name="__codelineno-54-26"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-54-27" name="__codelineno-54-27"></a>
+<a id="__codelineno-54-28" name="__codelineno-54-28"></a><span class="w">    </span><span class="c1">// ein einzelnes Feld des Formulars: [FromForm]</span>
+<a id="__codelineno-54-29" name="__codelineno-54-29"></a><span class="w">    </span><span class="na">[HttpPost("action03")]</span>
+<a id="__codelineno-54-30" name="__codelineno-54-30"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Action03</span><span class="p">([</span><span class="n">FromForm</span><span class="p">]</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">name</span><span class="p">)</span>
+<a id="__codelineno-54-31" name="__codelineno-54-31"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-54-32" name="__codelineno-54-32"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">$"name = [{name}]"</span><span class="p">;</span>
+<a id="__codelineno-54-33" name="__codelineno-54-33"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-54-34" name="__codelineno-54-34"></a>
+<a id="__codelineno-54-35" name="__codelineno-54-35"></a><span class="w">    </span><span class="c1">// die Formularfelder, gebunden und validiert durch die Klasse PersonModel</span>
+<a id="__codelineno-54-36" name="__codelineno-54-36"></a><span class="w">    </span><span class="na">[HttpPost("action04")]</span>
+<a id="__codelineno-54-37" name="__codelineno-54-37"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Action04</span><span class="p">([</span><span class="n">FromForm</span><span class="p">]</span><span class="w"> </span><span class="n">PersonModel</span><span class="w"> </span><span class="n">person</span><span class="p">)</span>
+<a id="__codelineno-54-38" name="__codelineno-54-38"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-54-39" name="__codelineno-54-39"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span>
+<a id="__codelineno-54-40" name="__codelineno-54-40"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-54-41" name="__codelineno-54-41"></a><span class="w">            </span><span class="n">person</span><span class="p">,</span>
+<a id="__codelineno-54-42" name="__codelineno-54-42"></a><span class="w">            </span><span class="n">valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">,</span>
+<a id="__codelineno-54-43" name="__codelineno-54-43"></a><span class="w">            </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelState</span><span class="p">.</span><span class="n">Values</span><span class="p">.</span><span class="n">SelectMany</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">Errors</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">ErrorMessage</span><span class="p">),</span>
+<a id="__codelineno-54-44" name="__codelineno-54-44"></a><span class="w">        </span><span class="p">};</span>
+<a id="__codelineno-54-45" name="__codelineno-54-45"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-54-46" name="__codelineno-54-46"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Gehen wir diesen Code durch:</p>
+<ul>
+<li>Zeilen 12–17: <strong><em>[Request.Form]</em></strong> enthält die Felder eines HTML-Formulars (Body-Typ <strong><em>[application/x-www-form-urlencoded]</em></strong>), ohne Binding oder Konvertierung. <strong><em>[Request.ContentType]</em></strong> ist der Typ des Bodys;</li>
+<li>Zeilen 23–25: <strong><em>[[FromBody]]</em></strong> weist das System an, den Body der Anfrage als <strong>JSON</strong>-Dokument zu lesen (das sendet ein <em>[JavaScript]</em>-Client). <strong><em>[JsonElement]</em></strong> stellt ein beliebiges JSON-Dokument dar; es hätte auch eine Klasse deklariert werden können;</li>
+<li>Zeilen 30–32: <strong><em>[[FromForm]]</em></strong>: ein Feld des Formulars;</li>
+<li>Zeilen 37–43: das gesamte Formular, gebunden und validiert durch die Klasse <strong><em>[PersonModel]</em></strong> aus Beispiel 08.</li>
+</ul>
+<p>Die Option <strong><em>[-d]</em></strong> von <em>[curl]</em> sendet eine POST-Anfrage mit einem Body im HTML-Format (<strong><em>[application/x-www-form-urlencoded]</em></strong>):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-55-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1"></a>curl -i -d "name=martin&amp;age=42" http://localhost:5000/post/action01
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-56-1">1</a></span>
+<span class="normal"><a href="#__codelineno-56-2">2</a></span>
+<span class="normal"><a href="#__codelineno-56-3">3</a></span>
+<span class="normal"><a href="#__codelineno-56-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-56-2" name="__codelineno-56-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-56-3" name="__codelineno-56-3"></a>
+<a id="__codelineno-56-4" name="__codelineno-56-4"></a>{"receivedType":"application/x-www-form-urlencoded","fields":{"name":"martin","age":"42"}}
+</code></pre></div></td></tr></table></div>
+<p>Derselbe Inhalt im JSON-Format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-57-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1"></a>curl -i -H "Content-Type: application/json" -d '{"name":"martin","age":42}' http://localhost:5000/post/action02
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-58-1">1</a></span>
+<span class="normal"><a href="#__codelineno-58-2">2</a></span>
+<span class="normal"><a href="#__codelineno-58-3">3</a></span>
+<span class="normal"><a href="#__codelineno-58-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-58-2" name="__codelineno-58-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-58-3" name="__codelineno-58-3"></a>
+<a id="__codelineno-58-4" name="__codelineno-58-4"></a>{"receivedType":"application/json","body":{"name":"martin","age":42}}
+</code></pre></div></td></tr></table></div>
+<p>(Geben Sie unter <em>[Windows]</em> an der Eingabeaufforderung <strong><em>[-d &quot;{\&quot;name\&quot;:\&quot;martin\&quot;,\&quot;age\&quot;:42}&quot;]</em></strong> ein). Das Alter ist im ersten Fall eine Zeichenkette (ein HTML-Formular überträgt nur Text) und im zweiten Fall eine Zahl. Eine <strong><em>[[FromBody]]</em></strong>-Action lehnt einen Body ab, der nicht im JSON-Format vorliegt, und gibt einen Fehler 415 zurück (<em>[Unsupported Media Type]</em>):</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-59-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1"></a>curl -i -d "name=martin&amp;age=42" http://localhost:5000/post/action02
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-60-1">1</a></span>
+<span class="normal"><a href="#__codelineno-60-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1"></a>HTTP/1.1 415 Unsupported Media Type
+<a id="__codelineno-60-2" name="__codelineno-60-2"></a>Content-Length: 0
+</code></pre></div></td></tr></table></div>
+<p>Die beiden anderen Actions:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-61-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1"></a>curl -i -d "name=martin&amp;age=42" http://localhost:5000/post/action03
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-62-1">1</a></span>
+<span class="normal"><a href="#__codelineno-62-2">2</a></span>
+<span class="normal"><a href="#__codelineno-62-3">3</a></span>
+<span class="normal"><a href="#__codelineno-62-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-62-2" name="__codelineno-62-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-62-3" name="__codelineno-62-3"></a>
+<a id="__codelineno-62-4" name="__codelineno-62-4"></a>name = [martin]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-63-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1"></a>curl -i -d "name=martin&amp;age=42&amp;title=Mme" http://localhost:5000/post/action04
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-64-1">1</a></span>
+<span class="normal"><a href="#__codelineno-64-2">2</a></span>
+<span class="normal"><a href="#__codelineno-64-3">3</a></span>
+<span class="normal"><a href="#__codelineno-64-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-64-2" name="__codelineno-64-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-64-3" name="__codelineno-64-3"></a>
+<a id="__codelineno-64-4" name="__codelineno-64-4"></a>{"person":{"name":"martin","age":42,"title":"Mme","email":null},"valid":true,"errors":[]}
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-65-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1"></a>curl -i -d "name=martin&amp;age=200" http://localhost:5000/post/action04
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-66-1">1</a></span>
+<span class="normal"><a href="#__codelineno-66-2">2</a></span>
+<span class="normal"><a href="#__codelineno-66-3">3</a></span>
+<span class="normal"><a href="#__codelineno-66-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-66-2" name="__codelineno-66-2"></a>Content-Type: application/json; charset=utf-8
+<a id="__codelineno-66-3" name="__codelineno-66-3"></a>
+<a id="__codelineno-66-4" name="__codelineno-66-4"></a>{"person":{"name":"martin","age":200,"title":null,"email":null},"valid":false,"errors":["the age must be between 0 and 150","the title is required","unknown title"]}
+</code></pre></div></td></tr></table></div>
+<p>Eine POST-Action gibt wie eine GET-Action den Statuscode 200 zurück (<em>[NestJS]</em> dagegen gab standardmäßig 201 zurück). Bei einer HTML-Anwendung antwortet eine POST-Action entweder mit einer Seite (dem erneut angezeigten Formular) oder mit einer Weiterleitung (siehe Beispiel 20).</p>
+<h2 id="36-beispiel-12-benutzerdefiniertes-binding-und-benutzerdefinierte-validierung">3.6. <span style="color: #2e74b5">Beispiel 12: Benutzerdefiniertes Binding und benutzerdefinierte Validierung</span></h2>
+<p>Sie können das Model Binding und die Validierung erweitern. Die Fallstudie nutzt diese Möglichkeiten nur mäßig, aber ihr Verständnis hilft, die Funktionsweise von <em>[ASP.NET Core]</em> zu begreifen.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-67-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-67-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-67-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-67-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-67-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-67-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-67-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-67-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-67-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-67-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1"></a>12-custom-binding/
+<a id="__codelineno-67-2" name="__codelineno-67-2"></a>├── Binding/
+<a id="__codelineno-67-3" name="__codelineno-67-3"></a>│   ├── DateFrBinder.cs
+<a id="__codelineno-67-4" name="__codelineno-67-4"></a>│   ├── LanguageBinder.cs
+<a id="__codelineno-67-5" name="__codelineno-67-5"></a>│   └── NoSpaceAttribute.cs
+<a id="__codelineno-67-6" name="__codelineno-67-6"></a>├── Controllers/
+<a id="__codelineno-67-7" name="__codelineno-67-7"></a>│   └── ExamplesController.cs
+<a id="__codelineno-67-8" name="__codelineno-67-8"></a>├── appsettings.json
+<a id="__codelineno-67-9" name="__codelineno-67-9"></a>├── Example12.csproj
+<a id="__codelineno-67-10" name="__codelineno-67-10"></a>└── Program.cs
+</code></pre></div></td></tr></table></div>
+<h3 id="361-ein-model-binder-datefrbinder">3.6.1. <span style="color: #1f4d78">Ein Model Binder: DateFrBinder</span></h3>
+<p>Ein <strong>Model Binder</strong>  ist das Objekt, das den Wert eines Parameters aus der Anfrage erzeugt. <em>[ASP.NET Core]</em> stellt sie für alle gängigen Typen bereit; Sie können eigene schreiben. Die Datei <strong><em>[Binding/DateFrBinder.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-68-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-68-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-68-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-68-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-68-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-68-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-68-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-68-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-68-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-68-10">10</a></span>
+<span class="normal"><a href="#__codelineno-68-11">11</a></span>
+<span class="normal"><a href="#__codelineno-68-12">12</a></span>
+<span class="normal"><a href="#__codelineno-68-13">13</a></span>
+<span class="normal"><a href="#__codelineno-68-14">14</a></span>
+<span class="normal"><a href="#__codelineno-68-15">15</a></span>
+<span class="normal"><a href="#__codelineno-68-16">16</a></span>
+<span class="normal"><a href="#__codelineno-68-17">17</a></span>
+<span class="normal"><a href="#__codelineno-68-18">18</a></span>
+<span class="normal"><a href="#__codelineno-68-19">19</a></span>
+<span class="normal"><a href="#__codelineno-68-20">20</a></span>
+<span class="normal"><a href="#__codelineno-68-21">21</a></span>
+<span class="normal"><a href="#__codelineno-68-22">22</a></span>
+<span class="normal"><a href="#__codelineno-68-23">23</a></span>
+<span class="normal"><a href="#__codelineno-68-24">24</a></span>
+<span class="normal"><a href="#__codelineno-68-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Globalization</span><span class="p">;</span>
+<a id="__codelineno-68-2" name="__codelineno-68-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc.ModelBinding</span><span class="p">;</span>
+<a id="__codelineno-68-3" name="__codelineno-68-3"></a>
+<a id="__codelineno-68-4" name="__codelineno-68-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example12.Binding</span><span class="p">;</span>
+<a id="__codelineno-68-5" name="__codelineno-68-5"></a>
+<a id="__codelineno-68-6" name="__codelineno-68-6"></a><span class="c1">// ein "Model Binder": wandelt ein französisches Datum "23/09/2026" in ein DateOnly um</span>
+<a id="__codelineno-68-7" name="__codelineno-68-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DateFrBinder</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IModelBinder</span>
+<a id="__codelineno-68-8" name="__codelineno-68-8"></a><span class="p">{</span>
+<a id="__codelineno-68-9" name="__codelineno-68-9"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">BindModelAsync</span><span class="p">(</span><span class="n">ModelBindingContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<a id="__codelineno-68-10" name="__codelineno-68-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-68-11" name="__codelineno-68-11"></a><span class="w">        </span><span class="c1">// der Rohwert aus der URL, dem Formular, der Route...</span>
+<a id="__codelineno-68-12" name="__codelineno-68-12"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">ValueProvider</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">ModelName</span><span class="p">).</span><span class="n">FirstValue</span><span class="p">;</span>
+<a id="__codelineno-68-13" name="__codelineno-68-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">DateOnly</span><span class="p">.</span><span class="n">TryParseExact</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span><span class="w"> </span><span class="s">"dd/MM/yyyy"</span><span class="p">,</span><span class="w"> </span><span class="n">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="p">,</span><span class="w"> </span><span class="n">DateTimeStyles</span><span class="p">.</span><span class="n">None</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">date</span><span class="p">))</span>
+<a id="__codelineno-68-14" name="__codelineno-68-14"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-68-15" name="__codelineno-68-15"></a><span class="w">            </span><span class="c1">// Erfolg: der Wert, den die Action erhält</span>
+<a id="__codelineno-68-16" name="__codelineno-68-16"></a><span class="w">            </span><span class="n">context</span><span class="p">.</span><span class="n">Result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelBindingResult</span><span class="p">.</span><span class="n">Success</span><span class="p">(</span><span class="n">date</span><span class="p">);</span>
+<a id="__codelineno-68-17" name="__codelineno-68-17"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-68-18" name="__codelineno-68-18"></a><span class="w">        </span><span class="k">else</span>
+<a id="__codelineno-68-19" name="__codelineno-68-19"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-68-20" name="__codelineno-68-20"></a><span class="w">            </span><span class="c1">// Fehler: ein Fehler in ModelState ("31/02/2026" wird ebenfalls abgelehnt)</span>
+<a id="__codelineno-68-21" name="__codelineno-68-21"></a><span class="w">            </span><span class="n">context</span><span class="p">.</span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">ModelName</span><span class="p">,</span><span class="w"> </span><span class="s">$"[{raw}] is not a valid dd/mm/yyyy date"</span><span class="p">);</span>
+<a id="__codelineno-68-22" name="__codelineno-68-22"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-68-23" name="__codelineno-68-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+<a id="__codelineno-68-24" name="__codelineno-68-24"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-68-25" name="__codelineno-68-25"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 7: Ein Model Binder implementiert die Schnittstelle <strong><em>[IModelBinder]</em></strong>;</li>
+<li>Zeile 9: Seine Methode <strong><em>[BindModelAsync]</em></strong> erhält den Binding-Kontext: den Parameternamen (<strong><em>[ModelName]</em></strong>), die Wertquellen (<strong><em>[ValueProvider]</em></strong>: die URL, das Formular, die Route ...), <strong><em>[ModelState]</em></strong> ...;</li>
+<li>Zeile 12: der Rohwert des Parameters (<strong><em>[FirstValue]</em></strong>: der erste, falls es mehrere gibt);</li>
+<li>Zeilen 13–16: <strong><em>[DateOnly.TryParseExact]</em></strong> konvertiert eine Zeichenkette im Format <strong><em>[dd/mm/yyyy]</em></strong> in <strong><em>[DateOnly]</em></strong> (ein Datum ohne Uhrzeit) und gibt <strong><em>[false]</em></strong> zurück, wenn das nicht möglich ist, auch bei einem nicht existierenden Datum (31/02/2026). Bei Erfolg liefert <strong><em>[ModelBindingResult.Success(date)]</em></strong> den Wert, den die Action erhält;</li>
+<li>Zeile 21: Schlägt der Vorgang fehl, wird ein Fehler zu <strong><em>[ModelState]</em></strong> hinzugefügt;</li>
+<li>Zeile 23: Die Methode ist ihrer Natur nach asynchron (<strong><em>[Task]</em></strong>), aber es gibt nichts abzuwarten: Sie gibt einen bereits abgeschlossenen Task zurück.</li>
+</ul>
+<h3 id="362-ein-zweiter-model-binder-languagebinder">3.6.2. <span style="color: #1f4d78">Ein zweiter Model Binder: LanguageBinder</span></h3>
+<p>Ein Parameter kann auch von anderswo als aus der URL oder dem Formular stammen. Die Datei <strong><em>[Binding/LanguageBinder.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-69-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-69-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-69-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-69-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-69-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-69-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-69-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-69-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-69-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-69-10">10</a></span>
+<span class="normal"><a href="#__codelineno-69-11">11</a></span>
+<span class="normal"><a href="#__codelineno-69-12">12</a></span>
+<span class="normal"><a href="#__codelineno-69-13">13</a></span>
+<span class="normal"><a href="#__codelineno-69-14">14</a></span>
+<span class="normal"><a href="#__codelineno-69-15">15</a></span>
+<span class="normal"><a href="#__codelineno-69-16">16</a></span>
+<span class="normal"><a href="#__codelineno-69-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc.ModelBinding</span><span class="p">;</span>
+<a id="__codelineno-69-2" name="__codelineno-69-2"></a>
+<a id="__codelineno-69-3" name="__codelineno-69-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example12.Binding</span><span class="p">;</span>
+<a id="__codelineno-69-4" name="__codelineno-69-4"></a>
+<a id="__codelineno-69-5" name="__codelineno-69-5"></a><span class="c1">// die bevorzugte Sprache des Browsers, aus dem Header gelesen</span>
+<a id="__codelineno-69-6" name="__codelineno-69-6"></a><span class="c1">// "Accept-Language: fr-FR,fr;q=0.9,en;q=0.8" -&gt; "fr"</span>
+<a id="__codelineno-69-7" name="__codelineno-69-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LanguageBinder</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IModelBinder</span>
+<a id="__codelineno-69-8" name="__codelineno-69-8"></a><span class="p">{</span>
+<a id="__codelineno-69-9" name="__codelineno-69-9"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">BindModelAsync</span><span class="p">(</span><span class="n">ModelBindingContext</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<a id="__codelineno-69-10" name="__codelineno-69-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-69-11" name="__codelineno-69-11"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">HttpContext</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">AcceptLanguage</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<a id="__codelineno-69-12" name="__codelineno-69-12"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">header</span><span class="p">.</span><span class="n">Split</span><span class="p">(</span><span class="sc">','</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="n">Trim</span><span class="p">();</span>
+<a id="__codelineno-69-13" name="__codelineno-69-13"></a><span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">first</span><span class="p">[.</span><span class="mf">.2</span><span class="p">].</span><span class="n">ToLowerInvariant</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">"fr"</span><span class="p">;</span>
+<a id="__codelineno-69-14" name="__codelineno-69-14"></a><span class="w">        </span><span class="n">context</span><span class="p">.</span><span class="n">Result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelBindingResult</span><span class="p">.</span><span class="n">Success</span><span class="p">(</span><span class="n">language</span><span class="p">);</span>
+<a id="__codelineno-69-15" name="__codelineno-69-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+<a id="__codelineno-69-16" name="__codelineno-69-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-69-17" name="__codelineno-69-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 11: der Header <strong><em>[Accept-Language]</em></strong>, der die bevorzugten Sprachen des Benutzers angibt;</li>
+<li>Zeilen 12–13: die ersten beiden Buchstaben der ersten Sprache. <strong><em>[first[..2]]</em></strong> ist ein <strong>Bereich</strong> (<em>[range]</em>): die Zeichen mit den Indizes 0 und 1.</li>
+</ul>
+<h3 id="363-ein-validierungsattribut-nospace">3.6.3. <span style="color: #1f4d78">Ein Validierungsattribut: [NoSpace]</span></h3>
+<p>Die Datei <strong><em>[Binding/NoSpaceAttribute.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-70-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-70-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-70-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-70-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-70-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-70-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-70-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-70-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-70-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-70-10">10</a></span>
+<span class="normal"><a href="#__codelineno-70-11">11</a></span>
+<span class="normal"><a href="#__codelineno-70-12">12</a></span>
+<span class="normal"><a href="#__codelineno-70-13">13</a></span>
+<span class="normal"><a href="#__codelineno-70-14">14</a></span>
+<span class="normal"><a href="#__codelineno-70-15">15</a></span>
+<span class="normal"><a href="#__codelineno-70-16">16</a></span>
+<span class="normal"><a href="#__codelineno-70-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.ComponentModel.DataAnnotations</span><span class="p">;</span>
+<a id="__codelineno-70-2" name="__codelineno-70-2"></a>
+<a id="__codelineno-70-3" name="__codelineno-70-3"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example12.Binding</span><span class="p">;</span>
+<a id="__codelineno-70-4" name="__codelineno-70-4"></a>
+<a id="__codelineno-70-5" name="__codelineno-70-5"></a><span class="c1">// ein selbst geschriebenes Validierungsattribut: [NoSpace]</span>
+<a id="__codelineno-70-6" name="__codelineno-70-6"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">NoSpaceAttribute</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ValidationAttribute</span>
+<a id="__codelineno-70-7" name="__codelineno-70-7"></a><span class="p">{</span>
+<a id="__codelineno-70-8" name="__codelineno-70-8"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">NoSpaceAttribute</span><span class="p">()</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">base</span><span class="p">(</span><span class="s">"the {0} field must not contain any space"</span><span class="p">)</span>
+<a id="__codelineno-70-9" name="__codelineno-70-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-70-10" name="__codelineno-70-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-70-11" name="__codelineno-70-11"></a>
+<a id="__codelineno-70-12" name="__codelineno-70-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsValid</span><span class="p">(</span><span class="kt">object?</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<a id="__codelineno-70-13" name="__codelineno-70-13"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-70-14" name="__codelineno-70-14"></a><span class="w">        </span><span class="c1">// null wird akzeptiert: die Pflicht dazu ist Sache von [Required]</span>
+<a id="__codelineno-70-15" name="__codelineno-70-15"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">text</span><span class="p">.</span><span class="n">Contains</span><span class="p">(</span><span class="sc">' '</span><span class="p">);</span>
+<a id="__codelineno-70-16" name="__codelineno-70-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-70-17" name="__codelineno-70-17"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 6: Ein Validierungsattribut erbt von <strong><em>[ValidationAttribute]</em></strong>. Üblicherweise endet der Name einer Attributklasse auf <strong><em>[Attribute]</em></strong>, was in der Praxis weggelassen wird: <strong><em>[[NoSpace]]</em></strong>;</li>
+<li>Zeile 8: die Standardfehlermeldung, die an die Elternklasse übergeben wird. <strong><em>[{0}]</em></strong> wird durch den Feldnamen ersetzt;</li>
+<li>Zeilen 12–15: Die Regel. <strong><em>[value is not string text]</em></strong>: Wenn der Wert keine Zeichenkette ist (<strong><em>[null]</em></strong> zum Beispiel), wird er akzeptiert; andernfalls wird er der Variablen [text] zugewiesen, die keine Leerzeichen enthalten darf. Die Fallstudie enthält ein Attribut dieser Art: <strong><em>[[OneOf]]</em></strong>.</li>
+</ul>
+<h3 id="364-der-controller">3.6.4. <span style="color: #1f4d78">Der Controller</span></h3>
+<p>Die Datei <strong><em>[Controllers/ExamplesController.cs]</em></strong>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-71-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-71-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-71-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-71-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-71-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-71-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-71-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-71-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-71-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-71-10">10</a></span>
+<span class="normal"><a href="#__codelineno-71-11">11</a></span>
+<span class="normal"><a href="#__codelineno-71-12">12</a></span>
+<span class="normal"><a href="#__codelineno-71-13">13</a></span>
+<span class="normal"><a href="#__codelineno-71-14">14</a></span>
+<span class="normal"><a href="#__codelineno-71-15">15</a></span>
+<span class="normal"><a href="#__codelineno-71-16">16</a></span>
+<span class="normal"><a href="#__codelineno-71-17">17</a></span>
+<span class="normal"><a href="#__codelineno-71-18">18</a></span>
+<span class="normal"><a href="#__codelineno-71-19">19</a></span>
+<span class="normal"><a href="#__codelineno-71-20">20</a></span>
+<span class="normal"><a href="#__codelineno-71-21">21</a></span>
+<span class="normal"><a href="#__codelineno-71-22">22</a></span>
+<span class="normal"><a href="#__codelineno-71-23">23</a></span>
+<span class="normal"><a href="#__codelineno-71-24">24</a></span>
+<span class="normal"><a href="#__codelineno-71-25">25</a></span>
+<span class="normal"><a href="#__codelineno-71-26">26</a></span>
+<span class="normal"><a href="#__codelineno-71-27">27</a></span>
+<span class="normal"><a href="#__codelineno-71-28">28</a></span>
+<span class="normal"><a href="#__codelineno-71-29">29</a></span>
+<span class="normal"><a href="#__codelineno-71-30">30</a></span>
+<span class="normal"><a href="#__codelineno-71-31">31</a></span>
+<span class="normal"><a href="#__codelineno-71-32">32</a></span>
+<span class="normal"><a href="#__codelineno-71-33">33</a></span>
+<span class="normal"><a href="#__codelineno-71-34">34</a></span>
+<span class="normal"><a href="#__codelineno-71-35">35</a></span>
+<span class="normal"><a href="#__codelineno-71-36">36</a></span>
+<span class="normal"><a href="#__codelineno-71-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Example12.Binding</span><span class="p">;</span>
+<a id="__codelineno-71-2" name="__codelineno-71-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
+<a id="__codelineno-71-3" name="__codelineno-71-3"></a>
+<a id="__codelineno-71-4" name="__codelineno-71-4"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Example12.Controllers</span><span class="p">;</span>
+<a id="__codelineno-71-5" name="__codelineno-71-5"></a>
+<a id="__codelineno-71-6" name="__codelineno-71-6"></a><span class="na">[Route("examples")]</span>
+<a id="__codelineno-71-7" name="__codelineno-71-7"></a><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ExamplesController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<a id="__codelineno-71-8" name="__codelineno-71-8"></a><span class="p">{</span>
+<a id="__codelineno-71-9" name="__codelineno-71-9"></a><span class="w">    </span><span class="c1">// /examples/schedule?day=23/09/2026: ein benutzerdefinierter Model Binder</span>
+<a id="__codelineno-71-10" name="__codelineno-71-10"></a><span class="w">    </span><span class="na">[HttpGet("schedule")]</span>
+<a id="__codelineno-71-11" name="__codelineno-71-11"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Schedule</span><span class="p">([</span><span class="n">ModelBinder</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">DateFrBinder</span><span class="p">))]</span><span class="w"> </span><span class="n">DateOnly</span><span class="w"> </span><span class="n">day</span><span class="p">)</span>
+<a id="__codelineno-71-12" name="__codelineno-71-12"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-71-13" name="__codelineno-71-13"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<a id="__codelineno-71-14" name="__codelineno-71-14"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-71-15" name="__codelineno-71-15"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">BadRequest</span><span class="p">(</span><span class="n">ModelState</span><span class="p">[</span><span class="k">nameof</span><span class="p">(</span><span class="n">day</span><span class="p">)]</span><span class="o">!</span><span class="p">.</span><span class="n">Errors</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">ErrorMessage</span><span class="p">);</span>
+<a id="__codelineno-71-16" name="__codelineno-71-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-71-17" name="__codelineno-71-17"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Ok</span><span class="p">(</span><span class="s">$"schedule for the day [{day:yyyy-MM-dd}]"</span><span class="p">);</span>
+<a id="__codelineno-71-18" name="__codelineno-71-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-71-19" name="__codelineno-71-19"></a>
+<a id="__codelineno-71-20" name="__codelineno-71-20"></a><span class="w">    </span><span class="c1">// /examples/hello: ein Parameter, der nicht aus der URL, sondern aus einem Header stammt</span>
+<a id="__codelineno-71-21" name="__codelineno-71-21"></a><span class="w">    </span><span class="na">[HttpGet("hello")]</span>
+<a id="__codelineno-71-22" name="__codelineno-71-22"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">Hello</span><span class="p">([</span><span class="n">ModelBinder</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">LanguageBinder</span><span class="p">))]</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">language</span><span class="p">)</span>
+<a id="__codelineno-71-23" name="__codelineno-71-23"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-71-24" name="__codelineno-71-24"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">"en"</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"Hello!"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">"Bonjour !"</span><span class="p">;</span>
+<a id="__codelineno-71-25" name="__codelineno-71-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-71-26" name="__codelineno-71-26"></a>
+<a id="__codelineno-71-27" name="__codelineno-71-27"></a><span class="w">    </span><span class="c1">// /examples/search?keyword=aspnet: ein benutzerdefiniertes Validierungsattribut</span>
+<a id="__codelineno-71-28" name="__codelineno-71-28"></a><span class="w">    </span><span class="na">[HttpGet("search")]</span>
+<a id="__codelineno-71-29" name="__codelineno-71-29"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Search</span><span class="p">([</span><span class="n">NoSpace</span><span class="p">]</span><span class="w"> </span><span class="kt">string?</span><span class="w"> </span><span class="n">keyword</span><span class="p">)</span>
+<a id="__codelineno-71-30" name="__codelineno-71-30"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-71-31" name="__codelineno-71-31"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<a id="__codelineno-71-32" name="__codelineno-71-32"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-71-33" name="__codelineno-71-33"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">BadRequest</span><span class="p">(</span><span class="n">ModelState</span><span class="p">[</span><span class="k">nameof</span><span class="p">(</span><span class="n">keyword</span><span class="p">)]</span><span class="o">!</span><span class="p">.</span><span class="n">Errors</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">ErrorMessage</span><span class="p">);</span>
+<a id="__codelineno-71-34" name="__codelineno-71-34"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-71-35" name="__codelineno-71-35"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Ok</span><span class="p">(</span><span class="s">$"search for [{keyword}]"</span><span class="p">);</span>
+<a id="__codelineno-71-36" name="__codelineno-71-36"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-71-37" name="__codelineno-71-37"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>Zeile 11: Das Attribut <strong><em>[[ModelBinder]]</em></strong> legt den Model Binder fest, der für diesen Parameter verwendet werden soll;</li>
+<li>Zeile 15: Ein ungültiges Datum führt zu einem Fehler 400 mit der Meldung des Model Binders;</li>
+<li>Zeile 22: Der Parameter <strong><em>[language]</em></strong> wird vom zweiten Model Binder bereitgestellt;</li>
+<li>Zeile 29: Ein Validierungsattribut kann auch direkt auf einen Action-Parameter angewendet werden.</li>
+</ul>
+<p>Die Ergebnisse:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-72-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1"></a>curl -i "http://localhost:5000/examples/schedule?day=23/09/2026"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-73-1">1</a></span>
+<span class="normal"><a href="#__codelineno-73-2">2</a></span>
+<span class="normal"><a href="#__codelineno-73-3">3</a></span>
+<span class="normal"><a href="#__codelineno-73-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-73-2" name="__codelineno-73-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-73-3" name="__codelineno-73-3"></a>
+<a id="__codelineno-73-4" name="__codelineno-73-4"></a>schedule for the day [2026-09-23]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-74-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1"></a>curl -i "http://localhost:5000/examples/schedule?day=2026-09-23"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-75-1">1</a></span>
+<span class="normal"><a href="#__codelineno-75-2">2</a></span>
+<span class="normal"><a href="#__codelineno-75-3">3</a></span>
+<span class="normal"><a href="#__codelineno-75-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-75-2" name="__codelineno-75-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-75-3" name="__codelineno-75-3"></a>
+<a id="__codelineno-75-4" name="__codelineno-75-4"></a>[2026-09-23] is not a valid dd/mm/yyyy date
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-76-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1"></a>curl -i "http://localhost:5000/examples/schedule?day=31/02/2026"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-77-1">1</a></span>
+<span class="normal"><a href="#__codelineno-77-2">2</a></span>
+<span class="normal"><a href="#__codelineno-77-3">3</a></span>
+<span class="normal"><a href="#__codelineno-77-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-77-2" name="__codelineno-77-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-77-3" name="__codelineno-77-3"></a>
+<a id="__codelineno-77-4" name="__codelineno-77-4"></a>[31/02/2026] is not a valid dd/mm/yyyy date
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-78-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1"></a>curl -i -H "Accept-Language: fr-FR,fr;q=0.9" http://localhost:5000/examples/hello
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-79-1">1</a></span>
+<span class="normal"><a href="#__codelineno-79-2">2</a></span>
+<span class="normal"><a href="#__codelineno-79-3">3</a></span>
+<span class="normal"><a href="#__codelineno-79-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-79-2" name="__codelineno-79-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-79-3" name="__codelineno-79-3"></a>
+<a id="__codelineno-79-4" name="__codelineno-79-4"></a>Bonjour !
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-80-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-80-1" name="__codelineno-80-1"></a>curl -i -H "Accept-Language: en-US,en;q=0.9" http://localhost:5000/examples/hello
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-81-1">1</a></span>
+<span class="normal"><a href="#__codelineno-81-2">2</a></span>
+<span class="normal"><a href="#__codelineno-81-3">3</a></span>
+<span class="normal"><a href="#__codelineno-81-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-81-2" name="__codelineno-81-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-81-3" name="__codelineno-81-3"></a>
+<a id="__codelineno-81-4" name="__codelineno-81-4"></a>Hello!
+</code></pre></div></td></tr></table></div>
+<p>(Die Option <strong><em>[-H]</em></strong> von <em>[curl]</em> fügt der Anfrage einen Header hinzu)</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-82-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1"></a>curl -i "http://localhost:5000/examples/search?keyword=aspnet"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-83-1">1</a></span>
+<span class="normal"><a href="#__codelineno-83-2">2</a></span>
+<span class="normal"><a href="#__codelineno-83-3">3</a></span>
+<span class="normal"><a href="#__codelineno-83-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-83-2" name="__codelineno-83-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-83-3" name="__codelineno-83-3"></a>
+<a id="__codelineno-83-4" name="__codelineno-83-4"></a>search for [aspnet]
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-84-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1"></a>curl -i "http://localhost:5000/examples/search?keyword=asp%20net"
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-85-1">1</a></span>
+<span class="normal"><a href="#__codelineno-85-2">2</a></span>
+<span class="normal"><a href="#__codelineno-85-3">3</a></span>
+<span class="normal"><a href="#__codelineno-85-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1"></a>HTTP/1.1 400 Bad Request
+<a id="__codelineno-85-2" name="__codelineno-85-2"></a>Content-Type: text/plain; charset=utf-8
+<a id="__codelineno-85-3" name="__codelineno-85-3"></a>
+<a id="__codelineno-85-4" name="__codelineno-85-4"></a>the keyword field must not contain any space
+</code></pre></div></td></tr></table></div>
+<p>(<strong><em>[%20]</em></strong> codiert ein Leerzeichen in einer URL)</p>
+<h3 id="365-fazit">3.6.5. <span style="color: #1f4d78">Fazit</span></h3>
+<p>Das Action-Modell wird vom Model Binding anhand der Anfrage erstellt: Routenparameter, URL, Formularfelder, JSON-Body und Header. Die Werte werden in die Parametertypen konvertiert und dann anhand der Attribute validiert. Das Ergebnis dieser beiden Schritte wird in <strong><em>[ModelState]</em></strong> gespeichert. Bei einem JSON-Server lehnt <strong><em>[[ApiController]]</em></strong> ein ungültiges Modell automatisch ab; bei einer HTML-Anwendung prüft die Action selbst <strong><em>[ModelState.IsValid]</em></strong> (Beispiel 09), damit das Formular erneut angezeigt werden kann. Das ist das Thema des nächsten Kapitels.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://stahe.github.io" target="_blank">
+          https://stahe.github.io
+        </a>
+        <br>
+        Dieses Tutorial, geschrieben von der KI <strong>Claude</strong> von Anthropic im Auftrag von <strong>Serge Tahé</strong>, wird der Öffentlichkeit unter den Bedingungen der Lizenz
+        <em>Creative Commons Namensnennung – Nicht kommerziell –
+        Weitergabe unter gleichen Bedingungen 3.0 Unported</em> zur Verfügung gestellt.
+
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
